@@ -1,2 +1,2 @@
 # mlhfinalproject
-final project for mlh; in collaboration with other member of my pod 
+final project for mlh; in collaboration with other members of my pod 

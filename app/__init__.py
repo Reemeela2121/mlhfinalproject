@@ -1,3 +1,4 @@
+
 from flask import Flask
 from flask_socketio import SocketIO
 
@@ -15,3 +16,4 @@ def create_app(debug=False):
 
     socketio.init_app(app)
     return app
+

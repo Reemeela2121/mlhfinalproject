@@ -1,12 +1,15 @@
 
 from flask import Flask
 from flask_socketio import SocketIO
+
 from dotenv import load_dotenv, find_dotenv
 import os
 
 load_dotenv(find_dotenv())
 
+
 socketio = SocketIO()
+
 
 
 def create_app(debug=False):
@@ -14,6 +17,7 @@ def create_app(debug=False):
     app = Flask(__name__)
     app.debug = debug
     app.config["SECRET_KEY"] = "in development"
+
 
     app.config[
         "SQLALCHEMY_DATABASE_URI"
@@ -24,6 +28,7 @@ def create_app(debug=False):
         port=5432,
         table=os.getenv("POSTGRES_DB"),
     )
+
 
     from .main import main as main_blueprint
 

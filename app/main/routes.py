@@ -18,13 +18,51 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(200), nullable=False, unique=True)
     password = db.Column(db.String(), nullable=False)
+    hobbies = db.Column(db.String(), nullable=False)
 
-    def __init__(self, username, password):
+    def __init__(self, username, password, hobbies):
         self.username = username
         self.password = password
+        self.hobbies = hobbies
 
     def __repr__(self):
         return f"<User {self.username}>"
+
+
+def match(own_hobbies, current_user_hobbies):
+    own_hobbies_arr = own_hobbies.split(", ")
+    current_user_hobbies_arr = current_user_hobbies.split(", ")
+    common = list(set(own_hobbies_arr).intersection(current_user_hobbies_arr))
+    return len(common)
+
+
+@main.route("/testing", methods=["GET", "POST"])
+def testing():
+    if "username" in session:
+        current_user = session["username"]
+        print(current_user)
+        print(User.query.filter_by(username=current_user).first().hobbies)
+    else:
+        return "u r not logged in"
+    own_hobbies = User.query.filter_by(username=current_user).first().hobbies
+    rows = User.query.count()
+    highest_match_value = -1
+    highest_match_id = None
+    for i in range(2, rows + 2):
+        if User.query.filter_by(id=i).first().username == current_user:
+            continue
+        current_user_hobbies = User.query.filter_by(id=i).first().hobbies
+        match_value = match(own_hobbies, current_user_hobbies)
+        if match_value > highest_match_value and match_value > 0:
+            highest_match_value = highest_match_value
+            highest_match_id = i
+        print(current_user_hobbies)
+    if highest_match_id == None:
+        return "you r forever alone"
+    return (
+        "Your best match is with user: "
+        + User.query.filter_by(id=highest_match_id).first().username
+    )
 
 
 @main.route("/dashboard", methods=["GET", "POST"])
@@ -68,17 +106,20 @@ def register():
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
+        hobbies = request.form.get("hobbies")
         error = None
 
         if not username:
             error = "Username is required."
         elif not password:
             error = "Password is required."
+        elif not hobbies:
+            error = "Hobbies is required."
         elif User.query.filter_by(username=username).first() is not None:
             error = f"User {username} is already registered."
 
         if error is None:
-            new_user = User(username, generate_password_hash(password))
+            new_user = User(username, generate_password_hash(password), hobbies)
             db.session.add(new_user)
             db.session.commit()
             session["username"] = username

@@ -1,3 +1,4 @@
+
 from flask import Flask
 from flask_socketio import SocketIO
 from dotenv import load_dotenv, find_dotenv
@@ -30,3 +31,4 @@ def create_app(debug=False):
 
     socketio.init_app(app)
     return app
+

@@ -47,10 +47,13 @@
                         <input type="text" class="search-bar" style="margin-bottom: 2.5rem;" placeholder="username"
                             required>
                         <br>
-                        <input type="text" class="search-bar" placeholder="password" style="margin-bottom: 2.5rem;"
+                        <input type="password" class="search-bar" placeholder="password" style="margin-bottom: 2.5rem;"
                             required> <!-- can use this for tampal !!! forms -->
+                        <br>
+                        <input type="text" class="search-bar" placeholder="hobbies" style="margin-bottom: 2.5rem;"
+                            required>
 
-                        <a href="{{ url_for('main.questionnaire') }}">
+                        <a href="{{ url_for('main.dashboard') }}">
                             <input type="button" class="search-btn-login" style="background-image: linear-gradient(to right, #ff83d5, #ffccb0); color: #fff;
                             cursor: pointer; width: 10rem;" value="Sign Up"> </a>
 

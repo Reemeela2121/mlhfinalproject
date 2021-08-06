@@ -43,17 +43,16 @@
                         Blob about anything with new friends
                     </h1>
                     <p class="paragraph">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi ipsa quos sint ex qui ratione
-                        earum doloremque obcaecati suscipit culpa atque soluta quia debitis illo, sapiente dolorum
-                        nostrum magnam minima.
+                        [[ Short Introduction Summary ]]
+
                     </p>
 
                     <div class="search">
 
                         <input type="text" class="search-bar" placeholder="Your email address" required>
                         <!-- can use this for tampal !!! forms -->
-                        <input type="button" class="search-btn hue-change" value="join"
-                            onclick="{{ url_for('main.register') }}">
+                        <a href="{{ url_for('main.register') }}">
+                            <input type="button" class="search-btn hue-change" value="join"></a>
                     </div>
 
                     <div class="sm-list">

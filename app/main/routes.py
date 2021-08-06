@@ -4,11 +4,12 @@ from .forms import LoginForm
 from flask import Flask, escape
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 
 # initialize the database
 db = SQLAlchemy()
-# migrate = Migrate(main, db)
+migrate = Migrate(main, db)
 
 # User Model
 class User(db.Model):
@@ -24,11 +25,6 @@ class User(db.Model):
 
     def __repr__(self):
         return f"<User {self.username}>"
-
-
-@main.route("/")
-def index():
-    return "Welcome"
 
 
 @main.route("/dashboard", methods=["GET", "POST"])
@@ -56,15 +52,15 @@ def chat():
     return render_template("chat.html", name=name, room=room)
 
 
-# @main.route("/")
-# def index():
-#     if "username" in session:
-#         username = session["username"]
-#     else:
-#         username = ""
-#     return render_template(
-#         "index.html", title="BLOBBER", url="localhost:5000", username=username
-#     )  # OR WE COULD CALL IT BLOBBER
+@main.route("/")
+def index():
+    if "username" in session:
+        username = session["username"]
+    else:
+        username = ""
+    return render_template(
+        "index.html", title="BLOBBER", url="localhost:5000", username=username
+    )  # OR WE COULD CALL IT BLOBBER
 
 
 @main.route("/register", methods=["GET", "POST"])
@@ -119,3 +115,33 @@ def login():
 def logout():
     session.clear()
     return redirect(url_for("index"))
+
+
+@main.route("/faq")
+def faq():
+    return render_template("faq.html", title="FAQ", url="faq")
+
+
+@main.route("/about")
+def about():
+    return render_template("about.html", title="about", url="about")
+
+
+@main.route("/quiz")
+def questionnaire():
+    return render_template("questions.html", title="questionnaire", url="quiz")
+
+
+# @main.route("/loading")
+# def loading_screen():
+#     return render_template()
+
+
+# @main.route("/create_profile")
+# def create_profile():
+#     return render_template()
+
+
+# @main.route("/profile")
+# def profile():
+#     return render_template()

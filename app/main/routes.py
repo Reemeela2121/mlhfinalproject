@@ -4,10 +4,6 @@ from .forms import LoginForm
 from flask import Flask, escape
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
-from dotenv import load_dotenv, find_dotenv
-import os
-
-load_dotenv(find_dotenv())
 
 
 # initialize the database

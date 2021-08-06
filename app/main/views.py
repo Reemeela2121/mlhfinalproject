@@ -1,18 +1,32 @@
-from flask import session, redirect, url_for, render_template, request
-from . import main
-from .forms import LoginForm
-from flask import Flask, escape
+from flask import Flask, render_template, session, escape, request, redirect, url_for
+from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from dotenv import load_dotenv, find_dotenv
 import os
 
+main = Flask(__name__)
+
 load_dotenv(find_dotenv())
 
+# add database
+main.config[
+    "SQLALCHEMY_DATABASE_URI"
+] = "postgresql+psycopg2://{user}:{passwd}@{host}:{port}/{table}".format(
+    user=os.getenv("POSTGRES_USER"),
+    passwd=os.getenv("POSTGRES_PASSWORD"),
+    host=os.getenv("POSTGRES_HOST"),
+    port=5432,
+    table=os.getenv("POSTGRES_DB"),
+)
+main.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+main.secret_key = "secret-key"
+main.config["SECRET_KEY"] = "mysecret"
 
 # initialize the database
-db = SQLAlchemy()
-# migrate = Migrate(main, db)
+db = SQLAlchemy(main)
+migrate = Migrate(main, db)
 
 # User Model
 class User(db.Model):
@@ -28,36 +42,6 @@ class User(db.Model):
 
     def __repr__(self):
         return f"<User {self.username}>"
-
-
-@main.route("/")
-def index():
-    return "Welcome"
-
-
-@main.route("/dashboard", methods=["GET", "POST"])
-def dashboard():
-    """Login form to enter a room."""
-    form = LoginForm()
-    if form.validate_on_submit():
-        session["name"] = form.name.data
-        session["room"] = form.room.data
-        return redirect(url_for(".chat"))
-    elif request.method == "GET":
-        form.name.data = session.get("name", "")
-        form.room.data = session.get("room", "")
-    return render_template("dashboard.html", form=form)
-
-
-@main.route("/chat")
-def chat():
-    """Chat room. The user's name and room must be stored in
-    the session."""
-    name = session.get("name", "")
-    room = session.get("room", "")
-    if name == "" or room == "":
-        return redirect(url_for(".index"))
-    return render_template("chat.html", name=name, room=room)
 
 
 # @main.route("/")
@@ -123,3 +107,29 @@ def login():
 def logout():
     session.clear()
     return redirect(url_for("index"))
+
+
+# not sure if I want loading as a whole render template and rather as just a transition to next page
+@main.route("/loading")
+def loading_screen():
+    return render_template()
+
+
+@main.route("/create_profile")
+def create_profile():
+    return render_template()
+
+
+@main.route("/profile")
+def profile():
+    return render_template()
+
+
+@main.route("/quiz")
+def questionnaire():
+    return render_template()
+
+
+@main.route("/open_chat")
+def open_chat():
+    return render_template()

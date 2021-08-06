@@ -24,6 +24,8 @@ pip install -r requirements.txt
 Start flask development server
 ```bash
 $ export FLASK_ENV=development
+
 $ python chat.py
+
 ```
 Start a web browser and type in localhost:5000, page will render and can be intereact like any other webpage.

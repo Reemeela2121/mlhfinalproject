@@ -1,3 +1,4 @@
+
 from flask import Flask, render_template, session, escape, request, redirect, url_for
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -110,6 +111,7 @@ def logout():
 
 
 # not sure if I want loading as a whole render template and rather as just a transition to next page
+
 @app.route("/loading")
 def loading_screen():
     return render_template()
@@ -124,15 +126,22 @@ def create_profile():
 def profile():
     return render_template()
 
+@app.route("/faq")
+def faq():
+    return render_template('faq.html', title="FAQ", url="faq")
+
+@app.route("/about")
+def about():
+    return render_template('about.html', title="about", url="about")
 
 @app.route("/quiz")
 def questionnaire():
-    return render_template()
+    return render_template('questions.html', title="questionnaire", url="quiz")
 
 
 @app.route("/dashboard")
-def chat_dashboard():
-    return render_template()
+def dashboard():
+    return render_template('dashboard.html', title="chat dashboard", url=os.getenv("URL"))
 
 
 @app.route("/open_chat")

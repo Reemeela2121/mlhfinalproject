@@ -81,7 +81,7 @@ def dashboard():
 
 @main.route("/chat")
 def chat():
-    """Chat room. The user's name and room must be stored in
+    """Chat room. The user's name and room is stored in
     the session."""
     name = session.get("name", "")
     room = session.get("room", "")

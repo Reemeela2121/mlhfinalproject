@@ -53,8 +53,8 @@
             <nav class="nav">
                 <!--<a href="../templates/index.html" class="logo-box">
                    <img src="../static/img/logo.png" alt="" class="logo" style="width:220px; height:70px;">-->
-                <a href="#">
-                    <h1 class="nav-logo"> (⊃｡•́‿•̀｡)⊃ blobber </h1>
+                <a href="/">
+                    <h1 class="nav-logo"> (⊃○•́‿•̀○)⊃ blobber </h1>
                 </a>
                 <!--</a>-->
                 <ul class="nav-list">
@@ -85,14 +85,14 @@
                         <br>
                         <input type="text" class="search-bar" placeholder="password" style="margin-bottom: 2.5rem;"
                             required> <!-- can use this for tampal !!! forms -->
-                        <a href="{{ url_for('main.dashboard') }}">
+                        <a href="{{ url_for('dashboard') }}">
                             <input type="button" class="search-btn-login" style="background-image: linear-gradient(to right, #ff83d5, #ffccb0); color: #fff;
                             cursor: pointer; width: 10rem;" value="Login"> </a>
 
 
 
                     </div>
-                    <a href="{{ url_for('main.register') }}" style="color:white; text-align: center;">
+                    <a href="{{ url_for('register') }}" style="color:white; text-align: center;">
                         New to Blobber? Sign up here </a>
 
                 </div>

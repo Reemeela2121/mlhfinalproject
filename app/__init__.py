@@ -1,13 +1,16 @@
+
 from flask import Flask, render_template, request, redirect, url_for, session, abort
 from flask_socketio import SocketIO, join_room, leave_room, emit
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+
 from dotenv import load_dotenv, find_dotenv
 import os, requests
 
 # load environmental variables
 load_dotenv(find_dotenv())
+
 
 app = Flask(__name__)
 app.debug = True
@@ -230,6 +233,7 @@ def join(message):
     )
 
 
+
 @socketio.on("text", namespace="/chat")
 def text(message):
     """Sent by a client when the user entered a new message.
@@ -238,6 +242,7 @@ def text(message):
     emit(
         "message", {"msg": session.get("username") + " : " + message["msg"]}, room=room
     )
+
 
 
 @socketio.on("left", namespace="/chat")

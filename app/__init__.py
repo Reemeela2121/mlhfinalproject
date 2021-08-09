@@ -61,6 +61,27 @@ def match(own_hobbies, current_user_hobbies):
     common = list(set(own_hobbies_arr).intersection(current_user_hobbies_arr))
     return len(common)
 
+# Google reCaptcha sitekey
+# site_key = os.getenv("SITE_KEY")
+
+# reCaptcha verification
+# def is_human(captcha_response):
+#     secret = os.getenv("SECRET_KEY")
+#     payload = {"response": captcha_response, "secret": secret}
+#     response = requests.post(
+#         "https://www.google.com/recaptcha/api/siteverify", data=payload
+#     )
+#     response_text = response.json()
+#     return response_text["success"]
+
+# matching algorithm
+def match(own_hobbies, current_user_hobbies):
+    own_hobbies_arr = own_hobbies.split(", ")
+    current_user_hobbies_arr = current_user_hobbies.split(", ")
+    common = list(set(own_hobbies_arr).intersection(current_user_hobbies_arr))
+    return len(common)
+
+
 @app.route("/testing", methods=["GET", "POST"])
 def testing():
     if "username" in session:

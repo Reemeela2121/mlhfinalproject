@@ -1,15 +1,23 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <title>Flask-SocketIO-Chat: {{ room }}</title>
+    <title>BLOBBER Chat</title>
+    <!--Link to CSS 
+    <link href="../static/bootstrap.min.css" rel="stylesheet" />
+    <link href="../static/style.css" rel="stylesheet" /> -->
+
     <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
     <script type="text/javascript" charset="utf-8">
+        // Connect to the SocketIO server
+        // Connection URL has the following format, relative to the current page:
+        //      http[s]://<domain>:<port>[/<namespace>]
         var socket;
         $(document).ready(function () {
             socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
             socket.on('connect', function () {
-                socket.emit('joined', {});
+                socket.emit('join', {});
             });
             socket.on('status', function (data) {
                 $('#chat').val($('#chat').val() + '<' + data.msg + '>\n');
@@ -19,31 +27,45 @@
                 $('#chat').val($('#chat').val() + data.msg + '\n');
                 $('#chat').scrollTop($('#chat')[0].scrollHeight);
             });
-            $('#text').keypress(function (e) {
-                var code = e.keyCode || e.which;
-                if (code == 13) {
+            // Prevent sending empty lines into chat
+            $('#send').click(function (e) {
+                if ($('#text').val().length > 0) {
                     text = $('#text').val();
                     $('#text').val('');
                     socket.emit('text', { msg: text });
                 }
             });
+            // Allows send mesg via enter key press
+            // Prevent sending empty lines into chat
+            $('#text').keypress(function (e) {
+                var code = e.keyCode || e.which;
+                if (code == 13 && $('#text').val().length > 0) {
+                    text = $('#text').val();
+                    $('#text').val('');
+                    socket.emit('text', { msg: text });
+                }
+            });
+
         });
         function leave_room() {
             socket.emit('left', {}, function () {
                 socket.disconnect();
-
                 // go back to the login page
-                window.location.href = "{{ url_for('main.index') }}";
+                window.location.href = "{{ url_for('dashboard') }}";
             });
         }
     </script>
 </head>
 
-<body>
-    <h1>BLOBBER CHATROOM: {{ room }}</h1>
-    <textarea disabled id="chat" cols="80" rows="20"></textarea><br><br>
-    <input id="text" size="80" placeholder="Enter your message here"><br><br>
-    <a href="#" onclick="leave_room();">Leave this room</a>
+<body class="text-center">
+    <div class="chatwindow">
+        <h2>BLOBBER Chat</h2>
+        <h2>Room : {{session['room']}}</h2><br>
+        <textarea disabled id="chat" cols="70" rows="20" placeholder="No messages yet. Start one..."></textarea><br><br>
+        <input type="text" id="text" size="60" placeholder="Enter your message here" required autofocus />
+        <button type="button" id="send" class="">SEND</button><br><br>
+        <button type="button" class="" onclick=leave_room()>Leave this Chat</button>
+    </div>
 </body>
 
 </html>

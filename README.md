@@ -18,14 +18,18 @@ $ source python3-virtualenv/bin/activate
 
 ```bash
 pip install -r requirements.txt
+
 ```
+- Pay particiular attention to the dependencies needed for SocketIO
+    - Flask-SocketIO==4.3.1
+    - python-socketio==4.4.0
+    - python-engineio==3.13.2
+- **NOTE** Due to a known [issue](https://github.com/miguelgrinberg/Flask-SocketIO/issues/801) in SocketIO, the app can only be run in **production** mode
 
 ## Usage
-Start flask development server
+Start flask
 ```bash
-$ export FLASK_ENV=development
-
-$ python chat.py
+$ flask run
 
 ```
 Start a web browser and type in localhost:5000, page will render and can be intereact like any other webpage.

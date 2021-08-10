@@ -44,6 +44,13 @@
                         <h1 class="login-title"
                             style="margin-bottom: 1.5rem; color: white; font-size: 3rem; margin-left: 1rem;"> Register
                         </h1>
+
+                        {% if error %}
+                            <p class=error><strong>Error:</strong> {{ error }}
+                        {% endif %}
+
+
+
                         <form method="post">
                         <input type="text" name="username" class="search-bar" style="margin-bottom: 2.5rem;" placeholder="username"
                             required>

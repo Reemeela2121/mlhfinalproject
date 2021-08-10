@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template, request, redirect, url_for, session, abort
 from flask_socketio import SocketIO, join_room, leave_room, emit
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -35,6 +34,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 # initialize the database
 db = SQLAlchemy()
+db.init_app(app)
 migrate = Migrate(app, db)
 
 # User Model
@@ -178,7 +178,7 @@ def login():
 
         if error is None:
             session["username"] = username
-            return redirect(url_for("index"))
+            return redirect(url_for("dashboard"))
         else:
             return render_template("login.html", error=error)
 
@@ -233,7 +233,6 @@ def join(message):
     )
 
 
-
 @socketio.on("text", namespace="/chat")
 def text(message):
     """Sent by a client when the user entered a new message.
@@ -242,7 +241,6 @@ def text(message):
     emit(
         "message", {"msg": session.get("username") + " : " + message["msg"]}, room=room
     )
-
 
 
 @socketio.on("left", namespace="/chat")

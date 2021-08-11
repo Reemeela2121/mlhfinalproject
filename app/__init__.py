@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
+
 from dotenv import load_dotenv, find_dotenv
 import os, requests
 
@@ -14,12 +15,11 @@ load_dotenv(find_dotenv())
 
 
 app = Flask(__name__)
-app.debug = True
 app.config["SECRET_KEY"] = "in development"
 
 
 # initializing Socket IO
-socketio = SocketIO(app, manage_session=False)
+socketio = SocketIO(app, async_mode=None)
 
 # add database
 app.config[
@@ -261,8 +261,8 @@ def left(message):
     username = session.get("username")
     leave_room(room)
     session.clear()
-    emit("status", {"msg": username + " has left the room."}, room=room)
+    emit("status", {"msg": f"{username} has left the room."}, room=room)
 
 
 if __name__ == "__main__":
-    socketio.run(app)
+    socketio.run(app, debug=True)

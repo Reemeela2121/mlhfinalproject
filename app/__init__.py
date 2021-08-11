@@ -8,6 +8,8 @@ from flask_migrate import Migrate
 from dotenv import load_dotenv, find_dotenv
 import os, requests, random
 
+import random
+
 # load environmental variables
 load_dotenv(find_dotenv())
 
@@ -34,6 +36,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 # initialize the database
 db = SQLAlchemy()
+db.init_app(app)
 migrate = Migrate(app, db)
 
 # User Model
@@ -184,6 +187,7 @@ def login():
 
         if error is None:
             session["username"] = username
+            # session["room"] = first_hobby
             return redirect(url_for("chat"))
         else:
             return render_template("login.html", error=error)

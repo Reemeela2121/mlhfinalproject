@@ -6,7 +6,7 @@ from flask_migrate import Migrate
 
 
 from dotenv import load_dotenv, find_dotenv
-import os, requests
+import os, requests, random
 
 # load environmental variables
 load_dotenv(find_dotenv())
@@ -120,14 +120,13 @@ def dashboard():
 @app.route("/chat", methods=["GET", "POST"])
 def chat():
     if request.method == "POST":
-        username = request.form["username"]
         room = request.form["room"]
         # Store the data in session
-        session["username"] = username
         session["room"] = room
         return render_template("chat.html", session=session)
     else:
         if session.get("username") is not None:
+            session["room"] = random.choice(session.get("hobbies", "didn't work"))
             return render_template("chat.html", session=session)
         else:
             return redirect(url_for("index"))
@@ -135,6 +134,9 @@ def chat():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    if "username" in session:
+        return redirect(url_for("dashboard"))
+
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
@@ -164,11 +166,16 @@ def register():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    if "username" in session:
+        return redirect(url_for("dashboard"))
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
         error = None
         user = User.query.filter_by(username=username).first()
+        hobby_array = user.hobbies.split(",")
+        session["hobbies"] = hobby_array
+        # first_hobby = random.choice(hobby_array)
 
         if user is None:
             error = "Incorrect username."
@@ -177,7 +184,7 @@ def login():
 
         if error is None:
             session["username"] = username
-            return redirect(url_for("index"))
+            return redirect(url_for("chat"))
         else:
             return render_template("login.html", error=error)
 

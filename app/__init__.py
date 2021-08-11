@@ -120,13 +120,14 @@ def dashboard():
 @app.route("/chat", methods=["GET", "POST"])
 def chat():
     if request.method == "POST":
+        username = request.form["username"]
         room = request.form["room"]
         # Store the data in session
+        session["username"] = username
         session["room"] = room
         return render_template("chat.html", session=session)
     else:
         if session.get("username") is not None:
-            session["room"] = random.choice(session.get("hobbies", "didn't work"))
             return render_template("chat.html", session=session)
         else:
             return redirect(url_for("index"))
@@ -233,10 +234,9 @@ def join(message):
     """Sent by clients when they enter a room.
     A status message is broadcast to all people in the room."""
     room = session.get("room")
+    username = session.get("username")
     join_room(room)
-    emit(
-        "status", {"msg": session.get("username") + " has entered the room."}, room=room
-    )
+    emit("status", {"msg": f"{username} has entered the room."}, room=room)
 
 
 @socketio.on("text", namespace="/chat")
@@ -244,9 +244,9 @@ def text(message):
     """Sent by a client when the user entered a new message.
     The message is sent to all people in the room."""
     room = session.get("room")
-    emit(
-        "message", {"msg": session.get("username") + " : " + message["msg"]}, room=room
-    )
+    username = session.get("username")
+    msg = message["msg"]
+    emit("message", {"msg": f"{username} :  {msg}"}, room=room)
 
 
 @socketio.on("left", namespace="/chat")

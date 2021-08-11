@@ -6,7 +6,7 @@ from flask_migrate import Migrate
 
 
 from dotenv import load_dotenv, find_dotenv
-import os, requests
+import os, requests, random
 
 import random
 

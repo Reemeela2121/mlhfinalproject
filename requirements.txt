@@ -12,7 +12,6 @@ Flask==1.1.1
 Flask-Migrate==3.1.0
 Flask-SocketIO==4.3.1
 Flask-SQLAlchemy==2.5.1
-greenlet==0.4.15
 gunicorn==20.1.0
 idna==3.2
 importlib-metadata==4.6.3

@@ -393,16 +393,15 @@ def join(message):
     # username = session.get("username")
     # join_room(room)
     # emit("status", {"msg": f"{username} has entered the room."}, room=room)
-        join_room(room)
+    join_room(room)
 
     exists = Room.query.filter_by(room_name=room).first() is not None
 
-
-        # if error is None:
-        #     new_user = User(username, generate_password_hash(password), hobbies)
-        #     db.session.add(new_user)
-        #     db.session.commit()
-        #     return redirect(url_for("login"))
+    # if error is None:
+    #     new_user = User(username, generate_password_hash(password), hobbies)
+    #     db.session.add(new_user)
+    #     db.session.commit()
+    #     return redirect(url_for("login"))
 
     capacity = 2
 
@@ -420,7 +419,14 @@ def join(message):
     current_occupancy = str(Room.query.filter_by(room_name=room).first().occupancy)
 
     emit(
-        "status", {"msg": session.get("username") + " has entered the room. The current occupancy is " + current_occupancy + "."}, room=room
+        "status",
+        {
+            "msg": session.get("username")
+            + " has entered the room. The current occupancy is "
+            + current_occupancy
+            + "."
+        },
+        room=room,
     )
 
 

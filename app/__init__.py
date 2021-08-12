@@ -33,7 +33,7 @@ app.config[
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 # initialize the database
-db = SQLAlchemy()
+db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 # User Model
@@ -157,7 +157,7 @@ def register():
             new_user = User(username, generate_password_hash(password), hobbies)
             db.session.add(new_user)
             db.session.commit()
-            # session["username"] = username
+            session["username"] = username
             return redirect(url_for("login"))
         else:
             return render_template("register.html", error=error)

@@ -55,7 +55,21 @@ class User(db.Model):
     profession = db.Column(db.String(), nullable=True)
     music = db.Column(db.String(), nullable=True)
 
-    def __init__(self, username, password, hobbies):
+    def __init__(
+        self,
+        username,
+        password,
+        pronouns,
+        age,
+        gender,
+        sexuality,
+        personality,
+        horoscope,
+        hobbies,
+        term,
+        profession,
+        music,
+    ):
         self.username = username
         self.password = password
         self.pronouns = pronouns
@@ -178,27 +192,66 @@ def term_score(own_term, other_term):
         return 0
 
 
+def profession_score(own_profession, other_profession):
+    if own_profession == other_profession:
+        return 3
+    else:
+        return 0
+
+
+def music_score(own_music, other_music):
+    own_music_arr = own_music.split(", ")
+    other_music_arr = other_music.split(", ")
+    common = list(set(own_music_arr).intersection(other_music_arr))
+    return len(common)
+
+
 @app.route("/testing", methods=["GET", "POST"])
 def testing():
     if "username" in session:
         current_user = session["username"]
-        print(current_user)
-        print(User.query.filter_by(username=current_user).first().hobbies)
+
     else:
         return "u r not logged in"
+    rows = User.query.count()  # get table length
+
+    own_age = User.query.filter_by(username=current_user).first().age
+    own_gender = User.query.filter_by(username=current_user).first().gender
+    own_personality = User.query.filter_by(username=current_user).first().sexuality
+    own_horoscope = User.query.filter_by(username=current_user).first().horoscope
     own_hobbies = User.query.filter_by(username=current_user).first().hobbies
-    rows = User.query.count()
+    own_term = User.query.filter_by(username=current_user).first().term
+    own_profession = User.query.filter_by(username=current_user).first().profession
+    own_music = User.query.filter_by(username=current_user).first().music
+
     highest_match_value = -1
     highest_match_id = None
     for i in range(2, rows + 2):
         if User.query.filter_by(id=i).first().username == current_user:
             continue
-        current_user_hobbies = User.query.filter_by(id=i).first().hobbies
-        match_value = match(own_hobbies, current_user_hobbies)
+
+        match_value = 0
+        match_value += age_score(own_age, User.query.filter_by(id=i).first().age)
+        match_value += gender_score(own_age, User.query.filter_by(id=i).first().gender)
+        match_value += sexuality_score(
+            own_age, User.query.filter_by(id=i).first().sexuality
+        )
+        match_value += horoscope_score(
+            own_age, User.query.filter_by(id=i).first().horoscope
+        )
+        match_value += hobbies_score(
+            own_age, User.query.filter_by(id=i).first().hobbies
+        )
+        match_value += term_score(own_age, User.query.filter_by(id=i).first().term)
+        match_value += profession_score(
+            own_age, User.query.filter_by(id=i).first().profession
+        )
+        match_value += music_score(own_age, User.query.filter_by(id=i).first().music)
+
         if match_value > highest_match_value and match_value > 0:
-            highest_match_value = highest_match_value
+            highest_match_value = match_value
             highest_match_id = i
-        print(current_user_hobbies)
+
     if highest_match_id == None:
         return "you r forever alone"
     return (
@@ -336,9 +389,39 @@ def join(message):
     """Sent by clients when they enter a room.
     A status message is broadcast to all people in the room."""
     room = session.get("room")
-    username = session.get("username")
-    join_room(room)
-    emit("status", {"msg": f"{username} has entered the room."}, room=room)
+    # -= old code =-
+    # username = session.get("username")
+    # join_room(room)
+    # emit("status", {"msg": f"{username} has entered the room."}, room=room)
+        join_room(room)
+
+    exists = Room.query.filter_by(room_name=room).first() is not None
+
+
+        # if error is None:
+        #     new_user = User(username, generate_password_hash(password), hobbies)
+        #     db.session.add(new_user)
+        #     db.session.commit()
+        #     return redirect(url_for("login"))
+
+    capacity = 2
+
+    if exists:
+        if Room.query.filter_by(room_name=room).first().occupancy > capacity:
+            print("room has reached capacity")
+            return
+        Room.query.filter_by(room_name=room).first().occupancy += 1
+        db.session.commit()
+
+    else:
+        new_room = Room(room, 1)
+        db.session.add(new_room)
+        db.session.commit()
+    current_occupancy = str(Room.query.filter_by(room_name=room).first().occupancy)
+
+    emit(
+        "status", {"msg": session.get("username") + " has entered the room. The current occupancy is " + current_occupancy + "."}, room=room
+    )
 
 
 @socketio.on("text", namespace="/chat")
@@ -357,6 +440,8 @@ def left(message):
     A status message is broadcast to all people in the room."""
     room = session.get("room")
     username = session.get("username")
+    Room.query.filter_by(room_name=room).first().occupancy -= 1
+    db.session.commit()
     leave_room(room)
     session.clear()
     emit("status", {"msg": f"{username} has left the room."}, room=room)

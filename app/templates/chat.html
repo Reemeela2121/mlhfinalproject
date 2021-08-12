@@ -16,6 +16,7 @@
         var socket;
         $(document).ready(function () {
             socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
+            //socket = io.connect('http://' + document.domain + '/chat');
             socket.on('connect', function () {
                 socket.emit('join', {});
             });
@@ -65,6 +66,7 @@
         <input type="text" id="text" size="60" placeholder="Enter your message here" required autofocus />
         <button type="button" id="send" class="">SEND</button><br><br>
         <button type="button" class="" onclick=leave_room()>Leave this Chat</button>
+        <br><a href="/logout">Logout</a>
     </div>
 </body>
 

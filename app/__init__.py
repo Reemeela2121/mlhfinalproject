@@ -159,8 +159,7 @@ def register():
             db.session.commit()
             session["username"] = username
             return redirect(url_for("login"))
-        else:
-            return render_template("register.html", error=error)
+        return render_template("register.html", error=error)
 
     return render_template("register.html")
 
@@ -186,8 +185,8 @@ def login():
         if error is None:
             session["username"] = username
             return redirect(url_for("chat"))
-        else:
-            return render_template("login.html", error=error)
+
+        return render_template("login.html", error=error)
 
     return render_template("login.html")
 

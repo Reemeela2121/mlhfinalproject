@@ -265,8 +265,8 @@ def register():
             db.session.commit()
             # session["username"] = username
             return redirect(url_for("login"))
-        else:
-            return render_template("register.html", error=error)
+
+        return render_template("register.html", error=error)
 
     return render_template("register.html")
 
@@ -282,7 +282,6 @@ def login():
         user = User.query.filter_by(username=username).first()
         hobby_array = user.hobbies.split(",")
         session["hobbies"] = hobby_array
-        # first_hobby = random.choice(hobby_array)
 
         if user is None:
             error = "Incorrect username."
@@ -293,8 +292,8 @@ def login():
             session["username"] = username
             # session["room"] = first_hobby
             return redirect(url_for("chat"))
-        else:
-            return render_template("login.html", error=error)
+
+        return render_template("login.html", error=error)
 
     return render_template("login.html")
 

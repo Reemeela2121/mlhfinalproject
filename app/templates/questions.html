@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,28 +39,191 @@
         <div class="container">
             <div class="content">
                 <div class="content-details">
+                    <div class="search" id="form00" style="display:none;">
+                        <h1 class="title"> Time to complete your profile!</h1>
+                        <p class="paragraph"> In order to match you with friends who are compatible with you, we need to
+                            ask you a few short questions about yourself!</p>
+                        <a href="toNextQuestion('form00','form0')">
+                            <input type="submit" class="search-btn"
+                                style="margin-left:6px; margin-top:1rem; margin-bottom: 1rem;" value="Let's Start!"
+                                onclick="toNextQuestion('form00','form0')">
+                        </a>
+                    </div>
 
-                    <div class="search">
-                        <p class="paragraph"> Question #1 </p>
-                        <input type="text" class="search-bar" placeholder="your response..." required>
-                        <!-- can use this for tampal !!! forms -->
-                        <input type="button-login" class="search-btn" value="next->" onclick="">
+                    <div class="search" id="form0" style="display:none;">
+                        <form action="POST">
+                            <label for="age">
+                                <p class="paragraph" style="margin-bottom:1rem;"> What's your age? </p>
+                            </label>
+                            <select name="age" id="age" class="custom-select" required>
+                                <option value="" disabled selected hidden>Select</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                            </select>
+                            <br>
+                            <label for="gender">
+                                <p class="paragraph" style="margin-top:1rem; margin-bottom: 1rem;"> What's your gender?
+                                </p>
+                            </label>
+                            <select name="gender" id="gender" class="custom-select" required>
+                                <option value="" disabled selected hidden>Select</option>
+                                <option value="female">Female</option>
+                                <option value="male">Male</option>
+                                <option value="non-binary"> Non-binary</option>
+                                <option value="no-answer"> Prefer not to answer</option>
+                            </select>
+                            <br>
+                            <label for="sexuality">
+                                <p class="paragraph" style="margin-top:1rem; margin-bottom: 1rem;"> What's your
+                                    sexuality? </p>
+                            </label>
+                            <select name="sexuality" id="sexuality" class="custom-select" required>
+                                <option value="" disabled selected hidden>Select</option>
+                                <option value="Heterosexual"> Heterosexual</option>
+                                <option value="Gay"> Gay </option>
+                                <option value="Lesbian"> Lesbian </option>
+                                <option value="Bisexual"> Bisexual </option>
+                                <option value="Trans"> Trans </option>
+                                <option value="Questioning"> Questioning/Queer</option>
+                                <option value="Asexual"> Asexual/Aromantic </option>
+                                <option value="prefer-not-response"> Prefer not to answer</option>
+                            </select>
+                            <br>
+
+                            <!-- option to select pronouns -->
+
+                            <input type="submit" class="search-btn"
+                                style="margin-left:6px; margin-top:1rem; margin-bottom: 1rem;" value="Next"
+                                onclick="toNextQuestion('form0','form1')">
+                        </form>
+                    </div>
+
+                    <div class="search" id="form1" style="display:none;">
+                        <form action="POST">
+                            <label for="zodiac">
+                                <p class="paragraph" style="margin-top:1rem; margin-bottom: 1rem;">
+                                    What's your sign?
+                                </p>
+                            </label>
+                            <select name="zodiac" id="zodiac" class="custom-select" required>
+                                <option value="" disabled selected hidden>Select</option>
+                                <option value="Aries">Aries ♈️: March 21 - April 19</option>
+                                <option value="Taurus">Taurus ♉️: April 20 - May 20</option>
+                                <option value="Gemini">Gemini ♊️: May 21 - June 20</option>
+                                <option value="Cancer">Cancer ♋️: June 21 - July 22</option>
+                                <option value="Leo">Leo ♌️: July 23 - August 22</option>
+                                <option value="Virgo">Virgo ♍️: August 23 - September 22</option>
+                                <option value="Libra">Libra ♎️: September 23 - October 22</option>
+                                <option value="Scorpio">Scorpio ♏️: October 23 - November 21</option>
+                                <option value="Sagittarius">Sagittarius ♐️: November 22 - December 21</option>
+                                <option value="Capricorn">Capricorn ♑️: December 22 - January 19</option>
+                                <option value="Aquarius">Aquarius ♒️: January 20 - February 18</option>
+                                <option value="Pisces">Pisces ♓️: February 19 - March 20</option>
+                            </select>
+                            <br>
+                            <label for="personality">
+                                <p class="paragraph" style="margin-top:1rem; margin-bottom: 1rem;">
+                                    What's your personality?
+                                </p>
+                            </label>
+                            <select name="personality" id="personality" class="custom-select">
+                                <option value="" disabled selected hidden>Select</option>
+                                <option value="extrovert"> Extrovert</option>
+                                <option value="introvert"> Introvert</option>
+                                <option value="ambivert"> Ambivert</option>
+                                <option value="not-sure"> Not Sure</option>
+                            </select>
+                            <br>
+                            <label for="music">
+                                <p class="paragraph" style="margin-top:1rem; margin-bottom: 1rem;">
+                                    What's your favorite music genre? </p>
+                            </label>
+                            <select name="music" id="music" class="custom-select">
+                                <option value="" disabled selected hidden>Select</option>
+                                <option value="Rap">Rap</option>
+                                <option value="Pop">Pop</option>
+                                <option value="Nicki_Minaj">Nicki Minaj</option>
+                                <option value="Classical">Classical </option>
+                                <option value="HyperPop">HyperPop (100gecs)</option>
+                                <option value="K-POP">K-Pop</option>
+                                <option value="R&B">R&B</option>
+                                <option value="Jazz">Jazz</option>
+                                <option value="EDM">EDM</option>
+                                <option value="Rock">Rock</option>
+                                <option value="Alternative">Alternative</option>
+                                <option value="Indie">Indie</option>
+                                <option value="Punk">Punk</option>
+                                <option value="J-Pop">J-Pop</option>
+                            </select>
+                            <br>
+                            <input type="submit" class="search-btn" style="margin-left:10px;" value="Next"
+                                onclick="toNextQuestion('form1','form2')">
+                        </form>
+                    </div>
+
+                    <div class="search" id="form2" style="display:none;">
+                        <form action="POST">
+                            <label for="term">
+                                <p class="paragraph" style="margin-top:1rem; margin-bottom: 1rem;"> Are you interested
+                                    in a short-term or long-term friendship? </p>
+                            </label>
+                            <select name="term" id="term" class="custom-select" required>
+                                <option value="" disabled selected hidden>Select</option>
+                                <option value="short">Short-term</option>
+                                <option value="long-term">Long-term</option>
+                                <option value="any">Open to anything</option>
+                            </select>
+                            <br>
+                            <input type="submit" class="search-btn" style="margin-left:10px;" value="Next"
+                                onclick="toNextQuestion('form2','form3')">
+                        </form>
+                    </div>
+
+                    <div class="search" id="form3" style="display:block;">
+                        <form action="POST">
+                            <p class="paragraph"> What are your hobbies? </p>
+                            <input type="text" class="search-bar" placeholder="your response..." required>
+
+                            <input type="submit" class="search-btn" value="Next"
+                                onclick="toNextQuestion('form3','form4')">
+
+                        </form>
                     </div>
 
 
+                    <div class="search from4" style="display:none;">
+                        <form action="POST">
+                            <p class="paragraph"> What is your profession? </p>
+                            <input type="text" class="search-bar" placeholder="your response..." required>
+
+                            <input type="submit" class="search-btn" value="Next" onclick="{{ url_for('dashboard') }}">
+                        </form>
+                    </div>
                 </div>
 
                 <div class="image-group">
-                    <img src="../static/img/liq-5.png" alt="" class="blob-large">
-                    <img src="../static/img/liq-4.png" alt="" class="blob-bean">
-                </div>
-            </div>
-        </div>
-
-        <img src="../static/img/liq-1.png" alt="" class="blob blob-1">
-        <img src="../static/img/liq-2.png" alt="" class="blob blob-2">
-        <img src="../static/img/liq-3.png" alt="" class="blob blob-3">
-        <img src="../static/img/liq-6.png" alt="" class="blob blob-4">
+                    @@ -61,5 +204,13 @@ <h1 class="nav-logo"> (⊃○•́‿•̀○)⊃ blobber </h1>
+                    <img src="../static/img/liq-3.png" alt="" class="blob blob-3">
+                    <img src="../static/img/liq-6.png" alt="" class="blob blob-4">
     </section>
+
+    <script>
+        function toNextQuestion(current, next) {
+            javascript: this.form.submit();
+            document.getElementById(current).style.display = "none";
+            document.getElementById(next).style.display = "block";
+        }
+    </script>
 </body>
+
 </html>

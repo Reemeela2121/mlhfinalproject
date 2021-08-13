@@ -8,6 +8,8 @@ from flask_migrate import Migrate
 from dotenv import load_dotenv, find_dotenv
 import os, requests, random
 
+import random
+
 # load environmental variables
 load_dotenv(find_dotenv())
 
@@ -38,6 +40,20 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 # User Model
+
+class Room(db.Model):
+    __tablename__ = 'rooms'
+    id = db.Column(db.Integer, primary_key=True)
+    room_name = db.Column(db.String())
+    occupancy = db.Column(db.Integer, nullable=False)
+
+    def __init__(self, room_name, occupancy):
+        self.room_name = room_name
+        self.occupancy = occupancy
+
+    def __repr__(self):
+        return f'{self.id},{self.room_name}'
+
 class User(db.Model):
     __tablename__ = "users"
 
@@ -56,6 +72,7 @@ class User(db.Model):
     profession = db.Column(db.String(), nullable=True)
     music = db.Column(db.String(), nullable=True)
 
+
     def __init__(self, username, password):
     # def __init__(self, username, password, pronouns, age, gender, sexuality, personality, horoscope, hobbies, term, profession, music):
         self.username = username
@@ -71,6 +88,7 @@ class User(db.Model):
 #        self.term = term  # long term friend or short term friend
 #        self.profession = profession
 #        self.music = music  # music taste
+
 
     def __repr__(self):
         return f"<User {self.username}>"
@@ -104,11 +122,64 @@ class Room(db.Model):
 #     response_text = response.json()
 #     return response_text["success"]
 
-# matching algorithm
-def match(own_hobbies, current_user_hobbies):
+def age_score(own_age, other_age):
+    diff = abs(own_age - other_age)
+    if diff == 0:
+        diff = 1
+    return 5/diff
+
+def gender_score(own_gender, other_gender):
+    if own_gender == other_gender:
+        return 3
+    else:
+        return 1
+
+def personality_score(own_personality, other_personality):
+    if own_personality == other_personality:
+        return 3
+    elif own_personality == 'ambivert' or other_personality == 'ambivert':
+        return 1.5
+    else:
+        return 0
+
+def horoscope_score(own_horoscope, other_horoscope): # i dont believe in horoscopes but this is kinda fun
+    if (own_horoscope == 'cancer' or other_horoscope == 'cancer') and (own_horoscope == 'saggitarius' or other_horoscope == 'saggitarius'):
+        return 3
+    elif (own_horoscope == 'taurus' or other_horoscope == 'taurus') and (own_horoscope == 'pisces' or other_horoscope == 'pisces'):
+        return 3
+    elif (own_horoscope == 'gemini' or other_horoscope == 'gemini') and (own_horoscope == 'capricorn' or other_horoscope == 'capricorn'):
+        return 3
+    elif (own_horoscope == 'libra' or other_horoscope == 'libra') and (own_horoscope == 'leo' or other_horoscope == 'leo'):
+        return 3
+    elif (own_horoscope == 'scorpio' or other_horoscope == 'scorpio') and (own_horoscope == 'aries' or other_horoscope == 'aries'):
+        return 3
+    elif (own_horoscope == 'virgo' or other_horoscope == 'virgo') and (own_horoscope == 'aquarius' or other_horoscope == 'aquarius'):
+        return 3
+    else:
+        return 0
+
+def hobby_score(own_hobbies, other_hobbies):
     own_hobbies_arr = own_hobbies.split(", ")
-    current_user_hobbies_arr = current_user_hobbies.split(", ")
-    common = list(set(own_hobbies_arr).intersection(current_user_hobbies_arr))
+    other_hobbies_arr = other_hobbies.split(", ")
+    common = list(set(own_hobbies_arr).intersection(other_hobbies_arr))
+    return len(common)
+
+def term_score(own_term, other_term):
+    if own_term == other_term:
+        return 4
+    else:
+        return 0
+
+def profession_score(own_profession, other_profession):
+    if own_profession == other_profession:
+        return 3
+    else:
+        return 0
+
+def music_score(own_music, other_music):
+    own_music_arr = own_music.split(", ")
+    other_music_arr = other_music.split(", ")
+    common = list(set(own_music_arr).intersection(other_music_arr))
     return len(common)
 
 
@@ -201,7 +272,9 @@ def testing():
 
     else:
         return "u r not logged in"
+      
     rows = User.query.count()  # get table length
+
 
     own_age = User.query.filter_by(username=current_user).first().age
     own_gender = User.query.filter_by(username=current_user).first().gender
@@ -221,6 +294,7 @@ def testing():
         match_value = 0
         match_value += age_score(own_age, User.query.filter_by(id=i).first().age)
         match_value += gender_score(own_age, User.query.filter_by(id=i).first().gender)
+
         match_value += sexuality_score(
             own_age, User.query.filter_by(id=i).first().sexuality
         )
@@ -234,6 +308,7 @@ def testing():
         match_value += profession_score(
             own_age, User.query.filter_by(id=i).first().profession
         )
+
         match_value += music_score(own_age, User.query.filter_by(id=i).first().music)
 
         if match_value > highest_match_value and match_value > 0:
@@ -276,7 +351,6 @@ def chat():
         else:
             return redirect(url_for("index"))
 
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if "username" in session:
@@ -301,6 +375,7 @@ def register():
             db.session.commit()
             #session["username"] = username
             return redirect(url_for("login"))
+
         return render_template("register.html", error=error)
 
     return render_template("register.html")
@@ -315,9 +390,11 @@ def login():
         password = request.form.get("password")
         error = None
         user = User.query.filter_by(username=username).first()
+
         #hobby_array = user.hobbies.split(",")
         #session["hobbies"] = hobby_array
         # first_hobby = random.choice(hobby_array)
+
 
         if user is None:
             error = "Incorrect username."
@@ -326,6 +403,7 @@ def login():
 
         if error is None:
             session["username"] = username
+            # session["room"] = first_hobby
             return redirect(url_for("chat"))
 
         return render_template("login.html", error=error)
@@ -374,20 +452,25 @@ def questionnaire():
 def join(message):
     """Sent by clients when they enter a room.
     A status message is broadcast to all people in the room."""
+
     room = session.get("room")
+
     # -= old code =-
     # username = session.get("username")
     # join_room(room)
     # emit("status", {"msg": f"{username} has entered the room."}, room=room)
+
     join_room(room)
 
     exists = Room.query.filter_by(room_name=room).first() is not None
+
 
     # if error is None:
     #     new_user = User(username, generate_password_hash(password), hobbies)
     #     db.session.add(new_user)
     #     db.session.commit()
     #     return redirect(url_for("login"))
+
 
     capacity = 2
 
@@ -405,6 +488,7 @@ def join(message):
     current_occupancy = str(Room.query.filter_by(room_name=room).first().occupancy)
 
     emit(
+
         "status",
         {
             "msg": session.get("username")
@@ -413,6 +497,7 @@ def join(message):
             + "."
         },
         room=room,
+
     )
 
 
@@ -434,6 +519,7 @@ def left(message):
     username = session.get("username")
     Room.query.filter_by(room_name=room).first().occupancy -= 1
     db.session.commit()
+
     leave_room(room)
     session.clear()
     emit("status", {"msg": f"{username} has left the room."}, room=room)

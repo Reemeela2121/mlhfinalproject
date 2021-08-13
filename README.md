@@ -44,4 +44,12 @@ $ flask run
 
 ```
 
+- Setup ENV file: - Under app directory create a .env file - Include the following information for configuring your database and fill in with your information:
+
+  -POSTGRES_USER=
+  -POSTGRES_PASSWORD=
+  -POSTGRES_HOST=
+  -POSTGRES_DB=
+  
+
 Start a web browser and type in localhost:5000, page will render and can be intereact like any other webpage.

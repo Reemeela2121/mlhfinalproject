@@ -45,6 +45,20 @@
                             style="margin-bottom: 1.5rem; color: white; font-size: 3rem; margin-left: 1rem;"> Register
                         </h1>
 
+                        <form method="post">
+                            <input type="text" name="username" class="search-bar" style="margin-bottom: 2.5rem;"
+                                placeholder="username" required>
+                            <br>
+                            <input type="password" name="password" class="search-bar" placeholder="password"
+                                style="margin-bottom: 2.5rem;" required> <!-- can use this for tampal !!! forms -->
+                            <br>
+                            <!-- <input type="text" name="hobbies" class="search-bar" placeholder="hobbies"
+                                style="margin-bottom: 2.5rem;" required> -->
+                            <button type="submit" class="search-btn-login" style="background-image: linear-gradient(to right, #ff83d5, #ffccb0); color: #fff;
+                        cursor: pointer; width: 10rem;">Submit</button>
+
+                            <!-- <a href="{{ url_for('dashboard') }}">
+<!--
                         {% if error %}
                             <p class=error><strong>Error:</strong> {{ error }}
                         {% endif %}
@@ -56,14 +70,15 @@
                             required>
                         <br>
                         <input type="password" name="password" class="search-bar" placeholder="password" style="margin-bottom: 2.5rem;"
-                            required> <!-- can use this for tampal !!! forms -->
+                            required> <!-- can use this for tampal !!! forms 
                         <br>
                         <input type="text" name="hobbies" class="search-bar" placeholder="hobbies" style="margin-bottom: 2.5rem;"
                             required>
                         <button type="submit" class="search-btn-login" style="background-image: linear-gradient(to right, #ff83d5, #ffccb0); color: #fff;
                         cursor: pointer; width: 10rem;">Submit</button>  
 
-                        <!-- <a href="{{ url_for('dashboard') }}">
+                        <!-- <a href="{{ url_for('dashboard') }}"> 
+
                             <input type="button" class="search-btn-login" style="background-image: linear-gradient(to right, #ff83d5, #ffccb0); color: #fff;
                             cursor: pointer; width: 10rem;" value="Sign Up"> </a> -->
 
@@ -88,5 +103,5 @@
         <img src="../static/img/liq-6.png" alt="" class="blob blob-4">
     </section>
 </body>
-  
+
 </html>

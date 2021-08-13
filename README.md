@@ -33,11 +33,7 @@ $ source python3-virtualenv/bin/activate
 pip install -r requirements.txt
 
 ```
-- Pay particiular attention to the dependencies needed for SocketIO
-    - Flask-SocketIO==4.3.1
-    - python-socketio==4.4.0
-    - python-engineio==3.13.2
-- **NOTE** Due to a known [issue](https://github.com/miguelgrinberg/Flask-SocketIO/issues/801) in SocketIO, the app can only be run in **production** mode
+- **NOTE** Due to a known [issue](https://github.com/miguelgrinberg/Flask-SocketIO/issues/801) in SocketIO, the app may only be run in **production** mode
 
 ## Technologies Used
 

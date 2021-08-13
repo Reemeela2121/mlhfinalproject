@@ -17,7 +17,8 @@ app.config["SECRET_KEY"] = "in development"
 
 
 # initializing Socket IO
-socketio = SocketIO(app, async_mode=None)
+socketio = SocketIO(app, cors_allowed_origins='*', async_mode=None)
+
 
 # add database
 app.config[
@@ -55,34 +56,21 @@ class User(db.Model):
     profession = db.Column(db.String(), nullable=True)
     music = db.Column(db.String(), nullable=True)
 
-    def __init__(
-        self,
-        username,
-        password,
-        pronouns,
-        age,
-        gender,
-        sexuality,
-        personality,
-        horoscope,
-        hobbies,
-        term,
-        profession,
-        music,
-    ):
+    def __init__(self, username, password):
+    # def __init__(self, username, password, pronouns, age, gender, sexuality, personality, horoscope, hobbies, term, profession, music):
         self.username = username
         self.password = password
-        self.pronouns = pronouns
+       # self.pronouns = pronouns
 
-        self.age = age
-        self.gender = gender
-        self.sexuality = sexuality
-        self.personality = personality  # introvert / extrovert / ambivert
-        self.horoscope = horoscope
-        self.hobbies = hobbies
-        self.term = term  # long term friend or short term friend
-        self.profession = profession
-        self.music = music  # music taste
+#        self.age = age
+#        self.gender = gender
+#        self.sexuality = sexuality
+#        self.personality = personality  # introvert / extrovert / ambivert
+#        self.horoscope = horoscope
+#        self.hobbies = hobbies
+#        self.term = term  # long term friend or short term friend
+#        self.profession = profession
+#        self.music = music  # music taste
 
     def __repr__(self):
         return f"<User {self.username}>"
@@ -311,7 +299,7 @@ def register():
             new_user = User(username, generate_password_hash(password))
             db.session.add(new_user)
             db.session.commit()
-            session["username"] = username
+            #session["username"] = username
             return redirect(url_for("login"))
         return render_template("register.html", error=error)
 
@@ -327,8 +315,8 @@ def login():
         password = request.form.get("password")
         error = None
         user = User.query.filter_by(username=username).first()
-        hobby_array = user.hobbies.split(",")
-        session["hobbies"] = hobby_array
+        #hobby_array = user.hobbies.split(",")
+        #session["hobbies"] = hobby_array
         # first_hobby = random.choice(hobby_array)
 
         if user is None:
@@ -452,4 +440,4 @@ def left(message):
 
 
 if __name__ == "__main__":
-    socketio.run(app, debug=True)
+    socketio.run(app, debug=True, host='localhost', port=5000)

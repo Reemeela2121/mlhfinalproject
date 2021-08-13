@@ -7,4 +7,4 @@ __pycache__
 /virtualenv
 /migrations
 /app/migrations
-requirements.txt
+/app/requirements.txt

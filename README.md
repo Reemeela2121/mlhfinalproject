@@ -1,5 +1,18 @@
-# mlhfinalproject
+# Blobber Buddy Chat
+
+by Gigi, Joying, Megan and Reem :)
+
+## Introduction
+
 final project for mlh; in collaboration with other members of my pod 
+
+## Description
+
+
+
+## Visuals
+
+
 
 ## Installation
 
@@ -26,6 +39,14 @@ pip install -r requirements.txt
     - python-engineio==3.13.2
 - **NOTE** Due to a known [issue](https://github.com/miguelgrinberg/Flask-SocketIO/issues/801) in SocketIO, the app can only be run in **production** mode
 
+## Technologies Used
+
+- Python-Flask
+- SocketIO
+- HTML/CSS
+- Postgres
+
+
 ## Usage
 Start flask
 ```bash
@@ -40,3 +61,4 @@ $ flask run
   -POSTGRES_DB=
   
 Start a web browser and type in localhost:5000, page will render and can be intereact like any other webpage.
+

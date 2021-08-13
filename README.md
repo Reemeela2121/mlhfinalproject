@@ -1,3 +1,4 @@
+
 # Blobber Buddy Chat
 
 by Gigi, Joying, Megan and Reem :)
@@ -5,6 +6,7 @@ by Gigi, Joying, Megan and Reem :)
 ## Introduction
 
 final project for mlh; in collaboration with other members of my pod 
+
 
 ## Description
 
@@ -18,8 +20,8 @@ final project for mlh; in collaboration with other members of my pod
 
 Make sure you have python3 and pip installed
 
-
 Create and activate virtual environment using virtualenv
+
 ```bash
 $ python -m venv python3-virtualenv
 $ source python3-virtualenv/bin/activate
@@ -33,11 +35,13 @@ $ source python3-virtualenv/bin/activate
 pip install -r requirements.txt
 
 ```
+
 - Pay particiular attention to the dependencies needed for SocketIO
-    - Flask-SocketIO==4.3.1
-    - python-socketio==4.4.0
-    - python-engineio==3.13.2
+  - Flask-SocketIO==4.3.1
+  - python-socketio==4.4.0
+  - python-engineio==3.13.2
 - **NOTE** Due to a known [issue](https://github.com/miguelgrinberg/Flask-SocketIO/issues/801) in SocketIO, the app can only be run in **production** mode
+
 
 ## Technologies Used
 
@@ -48,11 +52,14 @@ pip install -r requirements.txt
 
 
 ## Usage
+
 Start flask
+
 ```bash
 $ flask run
 
 ```
+
 - Setup ENV file: - Under app directory create a .env file - Include the following information for configuring your database and fill in with your information:
 
   -POSTGRES_USER=
@@ -60,5 +67,6 @@ $ flask run
   -POSTGRES_HOST=
   -POSTGRES_DB=
   
+
 Start a web browser and type in localhost:5000, page will render and can be intereact like any other webpage.
 

@@ -40,6 +40,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 
+# Database Schema
 class User(db.Model):
     __tablename__ = "users"
 

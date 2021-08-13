@@ -297,20 +297,18 @@ def register():
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
-        hobbies = request.form.get("hobbies")
+        # hobbies = request.form.get("hobbies")
         error = None
 
         if not username:
             error = "Username is required."
         elif not password:
             error = "Password is required."
-        elif not hobbies:
-            error = "Hobbies is required."
         elif User.query.filter_by(username=username).first() is not None:
             error = f"User {username} is already registered."
 
         if error is None:
-            new_user = User(username, generate_password_hash(password), hobbies)
+            new_user = User(username, generate_password_hash(password))
             db.session.add(new_user)
             db.session.commit()
             session["username"] = username

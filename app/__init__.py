@@ -311,7 +311,7 @@ def register():
             new_user = User(username, generate_password_hash(password))
             db.session.add(new_user)
             db.session.commit()
-            session["username"] = username
+            # session["username"] = username
             return redirect(url_for("login"))
         return render_template("register.html", error=error)
 
@@ -327,8 +327,8 @@ def login():
         password = request.form.get("password")
         error = None
         user = User.query.filter_by(username=username).first()
-        hobby_array = user.hobbies.split(",")
-        session["hobbies"] = hobby_array
+        # hobby_array = user.hobbies.split(",")
+        # session["hobbies"] = hobby_array
         # first_hobby = random.choice(hobby_array)
 
         if user is None:
@@ -452,4 +452,4 @@ def left(message):
 
 
 if __name__ == "__main__":
-    socketio.run(app, debug=True)
+    socketio.run(app, debug=True, host="localhost", port=5000)

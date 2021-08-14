@@ -14,7 +14,15 @@ final project for mlh; in collaboration with other members of my pod
 
 ## Visuals
 
+## Technologies Used
 
+- Python-Flask
+- SocketIO
+- HTML/CSS
+- Postgres
+- NGINX
+- cAdvisor
+- Docker containers
 
 ## Installation
 
@@ -40,15 +48,7 @@ pip install -r requirements.txt
 
 
 
-## Technologies Used
 
-- Python-Flask
-- SocketIO
-- HTML/CSS
-- Postgres
-- NGINX
-- cAdvisor
-- Docker containers
 
 
 ## Usage

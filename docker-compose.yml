@@ -22,20 +22,20 @@ services:
     volumes:
       - mydatabase:/var/lib/postgresql/data
 
-  # nginx:
-  #   container_name: nginx
-  #   image: jonasal/nginx-certbot:latest
-  #   restart: unless-stopped
-  #   env_file:
-  #     - ./nginx-certbot.env
-  #   ports:
-  #     - 80:80
-  #     - 443:443
-  #   volumes:
-  #     - nginx_secrets:/etc/letsencrypt
-  #     - ./user_conf.d:/etc/nginx/user_conf.d
-  #   depends_on:
-  #     - web
+  nginx:
+    container_name: nginx
+    image: jonasal/nginx-certbot:latest
+    restart: unless-stopped
+    env_file:
+      - ./nginx-certbot.env
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - nginx_secrets:/etc/letsencrypt
+      - ./user_conf.d:/etc/nginx/user_conf.d
+    depends_on:
+      - web
 
   cadvisor:
     container_name: cadvisor
@@ -50,5 +50,5 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
 
 volumes:
-#  nginx_secrets:
+  nginx_secrets:
   mydatabase:

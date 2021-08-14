@@ -46,6 +46,9 @@ pip install -r requirements.txt
 - SocketIO
 - HTML/CSS
 - Postgres
+- NGINX
+- cAdvisor
+- Docker containers
 
 
 ## Usage

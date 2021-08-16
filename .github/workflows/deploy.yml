@@ -45,6 +45,16 @@ jobs:
           ssh my-vm 'cd ${{ secrets.PROJECT_ROOT }} 
           && docker-compose ps'
 
-      # - name: test deployment
-      #   run: bash ./prod-test.sh
+      - name: test deployment
+        run: bash ./prod-test.sh
+
+      - name: Discord success notification
+        if: ${{ success() }}
+        run: |
+          curl -s -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "content=🚀 Deployment Success https://weepingmelon.duckdns.org/"
+ 
+      - name: Discord failure notification
+        if: ${{ failure() }}
+        run: |
+          curl -s -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "content= !!!!🚫 Deployment Failed 🚫!!!!"
       

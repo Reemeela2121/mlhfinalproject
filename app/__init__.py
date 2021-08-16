@@ -8,7 +8,6 @@ from flask_migrate import Migrate
 from dotenv import load_dotenv, find_dotenv
 import os, requests, random
 
-import random
 
 # load environmental variables
 load_dotenv(find_dotenv())

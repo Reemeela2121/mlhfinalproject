@@ -44,6 +44,9 @@ jobs:
         run: >
           ssh my-vm 'cd ${{ secrets.PROJECT_ROOT }} 
           && docker-compose ps'
+    
+      - name:  Check out Git repository
+        uses: actions/checkout@v2
 
       - name: test deployment
         run: bash ./prod-test.sh

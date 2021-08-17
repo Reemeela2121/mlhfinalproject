@@ -8,3 +8,4 @@ __pycache__
 /migrations
 /app/migrations
 /app/requirements.txt
+docker-compose-home.yml

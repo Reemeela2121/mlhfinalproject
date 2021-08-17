@@ -16,8 +16,8 @@ GETVAR=$(curl -LI $URL$PAGE -o /dev/null -w '%{http_code}\n' -s -X $METHOD)
 STATCAT=${GETVAR:0:1}
 if [[ $STATCAT == 2 ]]; then
 echo $PAGE ${white}$METHOD${reset_color} $GETVAR ${green}'SUCCESS'${reset_color}
-elif [[ $GETVAR == 418 ]]; then
-echo $PAGE ${white}$METHOD${reset_color} $GETVAR ${purple}"I'm a teapot"${reset_color}
+elif [[ $GETVAR == 400 ]]; then
+echo $PAGE ${white}$METHOD${reset_color} $GETVAR ${purple}"Bad Request"${reset_color}
 elif [[ $GETVAR == 405 ]]; then 
 echo $PAGE ${white}$METHOD${reset_color} $GETVAR ${yellow}'METHOD NOT ALLOWED'${reset_color}
 else

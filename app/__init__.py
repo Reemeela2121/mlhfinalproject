@@ -364,6 +364,7 @@ def register():
     if "username" in session:
         return redirect(url_for("dashboard"))
     error = None
+    captcha_response = ""
     if request.method == "POST":
         username = request.form.get("username").lower()
         password = request.form.get("password")

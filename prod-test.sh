@@ -42,7 +42,7 @@ echo ${cyan}Posting to /login endpoint with register user and empty password${re
 testing_endpoint "$(curl -sX POST -d "username=test" -o /dev/null -w '%{http_code}\n' $URL'/login')" "400"
 
 echo Posting to /register endpoint with usr test, pw test pw test
-testing_endpoint "$(curl -sX POST -d "username=test&password=test&password2=test" -o /dev/null -w '%{http_code}\n' $URL'/register')" "200"
+testing_endpoint "$(curl -sX POST -d "username=test&password=test&password2=test" -o /dev/null -w '%{http_code}\n' $URL'/register')" "400"
 
 
 echo 'EXIT STATUS = '$EXITSTATUS

@@ -4,9 +4,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
-
+import os
+import requests
 from dotenv import load_dotenv, find_dotenv
-import os, requests
 
 
 # load environmental variables
@@ -96,6 +96,7 @@ class Room(db.Model):
 
 # Google reCaptcha sitekey
 site_key = os.getenv("SITE_KEY")
+
 
 # reCaptcha verification
 def is_human(captcha_response):

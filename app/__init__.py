@@ -364,15 +364,12 @@ def register():
     if "username" in session:
         return redirect(url_for("dashboard"))
     error = None
-    captcha_response = ""
     if request.method == "POST":
-        username = request.form.get("username").lower()
+        username = request.form.get("username")
         password = request.form.get("password")
         password2 = request.form.get("password2")
-        try:
-            captcha_response = request.form["g-recaptcha-response"]
-        except KeyError:
-            error = "reCaptcha Required"
+
+        captcha_response = request.form["g-recaptcha-response"]
 
         if not username:
             error = "Username is required."
@@ -381,7 +378,7 @@ def register():
         elif password != password2:
             error = "Password not the same."
         elif User.query.filter_by(username=username).first() is not None:
-            error = f"User {username.capitalize()} is already registered."
+            error = f"User {username} is already registered."
 
         if is_human(captcha_response):
 
@@ -402,7 +399,7 @@ def login():
     if "username" in session:
         return redirect(url_for("dashboard"))
     if request.method == "POST":
-        username = request.form.get("username").lower()
+        username = request.form.get("username")
         password = request.form.get("password")
         captcha_response = request.form["g-recaptcha-response"]
         user = User.query.filter_by(username=username).first()

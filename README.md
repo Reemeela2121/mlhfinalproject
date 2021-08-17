@@ -20,7 +20,16 @@ framework; Nginx to reverse proxy; Created a blobber.tech domain. Contained our
 application and use cAdvisor for monitoring. Used google reCaptcha to help with
 replay attacks. 
 
-## Visuals
+## Visuals 
+**updated 8/17/2021
+Home Page
+![image](https://user-images.githubusercontent.com/51943194/129788201-1c9a24f1-0858-41b9-90f2-3e756d9742a4.png)
+
+Register
+![image](https://user-images.githubusercontent.com/51943194/129788246-d4adb192-ceb4-42cd-b0c9-774f887b1ae8.png)
+
+Login
+![image](https://user-images.githubusercontent.com/51943194/129788442-ed820c5a-6b32-4534-8303-1caa0fa3c3fc.png)
 
 
 

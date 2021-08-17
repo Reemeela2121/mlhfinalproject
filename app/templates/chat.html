@@ -8,8 +8,12 @@
     <link href="../static/style.css" rel="stylesheet" /> -->
     <link href="../static/styles/style.css" rel="stylesheet" />
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"
+        integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ=="
+        crossorigin="anonymous"></script>
     <script type="text/javascript" charset="utf-8">
 
         // Connect to the SocketIO server
@@ -18,7 +22,6 @@
         var socket;
         $(document).ready(function () {
             socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
-            //socket = io.connect('http://' + document.domain + '/chat');
             socket.on('connect', function () {
                 socket.emit('join', {});
             });
@@ -53,9 +56,11 @@
         function leave_room() {
             socket.emit('left', {}, function () {
                 socket.disconnect();
-                // go back to the login page
-                window.location.href = "{{ url_for('dashboard') }}";
+                session.clear()
+                // go back to logout
+                window.location.href = "{{ url_for('index') }}";
             });
+
         }
     </script>
 </head>
@@ -77,7 +82,7 @@
                         <a href="faq" class="nav-link">FAQ</a>
                     </li>
                     <li class="nav-item">
-                        <a href="login" class="nav-link">Log Out</a> <!-- LOGOUT BUTTON HERE INSTEAD -->
+                        <a href="/logout" class="nav-link" onclick=leave_room()>Logout</a>
                     </li>
                 </ul>
             </nav>
@@ -118,9 +123,9 @@
 
             <br>
             <br>
-            <button type="button" class="" style="background-image: linear-gradient(to right, #ff83d5, #ffccb0); color: #fff;
+            <!-- <button type="button" class="" style="background-image: linear-gradient(to right, #ff83d5, #ffccb0); color: #fff;
                 cursor: pointer; width: 15rem; height: 4rem; border-radius: 5rem; border: none;"
-                onclick=leave_room()>Leave this Chat</button>
+                onclick=leave_room()>Logout</button> -->
         </div>
 
 

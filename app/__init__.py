@@ -346,11 +346,11 @@ def dashboard():
 @app.route("/chat", methods=["GET", "POST"])
 def chat():
     if request.method == "POST":
-        username = request.form["username"]
-        room = request.form["room"]
+        # username = request.form["username"]
+        # room = request.form["room"]
         # Store the data in session
-        session["username"] = username
-        session["room"] = room
+        # session["username"] = username
+        # session["room"] = room
         return render_template("chat.html", session=session)
     else:
         if session.get("username") is not None:

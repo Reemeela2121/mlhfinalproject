@@ -39,7 +39,15 @@
         <div class="container">
             <div class="content">
                 <div class="content-details">
-
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    <ul class=flashes>
+                        {% for message in messages %}
+                        {{ message }}
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% endwith %}
                     <div class="search">
                         <h1 class="login-title"
                             style="margin-bottom: 1.5rem; color: white; font-size: 3rem; margin-left: 1rem;"> Login

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_socketio import SocketIO, join_room, leave_room, emit
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
@@ -386,7 +386,9 @@ def register():
                 new_user = User(username, generate_password_hash(password))
                 db.session.add(new_user)
                 db.session.commit()
+                flash("Congratulations, you are now a registered user of blobber chat!")
                 return redirect(url_for("login"))
+
         else:
             error = "reCaptcha required."
     return render_template("register.html", error=error, site_key=site_key)
@@ -415,6 +417,7 @@ def login():
             if error is None:
                 session["username"] = username
                 return redirect(url_for("dashboard"))
+
         else:
             error = "reCaptcha required."
     return render_template("login.html", error=error, site_key=site_key)

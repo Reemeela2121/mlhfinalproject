@@ -5,7 +5,7 @@ EXITSTATUS=0
 # website data
 URL="https://blobber.tech"
 PAGES="/ /dashboard /login /register /faq /about"
-METHODS="GET"
+METHODS="GET POST"
 
 # Testing endpoints with request methods
 echo ${cyan}Testing endpoints with request methods${reset_color}

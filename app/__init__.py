@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for, session, abort
+from logging import captureWarnings
+from flask import Flask, render_template, request, redirect, url_for, session
 from flask_socketio import SocketIO, join_room, leave_room, emit
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
@@ -6,7 +7,7 @@ from flask_migrate import Migrate
 
 
 from dotenv import load_dotenv, find_dotenv
-import os, requests, random
+import os, requests
 
 
 # load environmental variables
@@ -95,17 +96,17 @@ class Room(db.Model):
 
 
 # Google reCaptcha sitekey
-# site_key = os.getenv("SITE_KEY")
+site_key = os.getenv("SITE_KEY")
 
 # reCaptcha verification
-# def is_human(captcha_response):
-#     secret = os.getenv("SECRET_KEY")
-#     payload = {"response": captcha_response, "secret": secret}
-#     response = requests.post(
-#         "https://www.google.com/recaptcha/api/siteverify", data=payload
-#     )
-#     response_text = response.json()
-#     return response_text["success"]
+def is_human(captcha_response):
+    secret = os.getenv("RECAP_KEY")
+    payload = {"response": captcha_response, "secret": secret}
+    response = requests.post(
+        "https://www.google.com/recaptcha/api/siteverify", data=payload
+    )
+    response_text = response.json()
+    return response_text["success"]
 
 
 def age_score(own_age, other_age):
@@ -332,7 +333,7 @@ def testing():
 # Home page
 @app.route("/")
 def index():
-    return render_template("index.html", title="BLOBBER", url="localhost:5000")
+    return render_template("index.html", title="BLOBBER")
 
 
 # dashboard
@@ -362,59 +363,63 @@ def chat():
 def register():
     if "username" in session:
         return redirect(url_for("dashboard"))
-
+    error = None
     if request.method == "POST":
-        username = request.form.get("username")
+        username = request.form.get("username").lower()
         password = request.form.get("password")
-        # hobbies = request.form.get("hobbies")
-        error = None
+        password2 = request.form.get("password2")
+        try:
+            captcha_response = request.form["g-recaptcha-response"]
+        except KeyError:
+            error = "reCaptcha Required"
 
         if not username:
             error = "Username is required."
         elif not password:
             error = "Password is required."
+        elif password != password2:
+            error = "Password not the same."
         elif User.query.filter_by(username=username).first() is not None:
-            error = f"User {username} is already registered."
+            error = f"User {username.capitalize()} is already registered."
 
-        if error is None:
-            new_user = User(username, generate_password_hash(password))
-            db.session.add(new_user)
-            db.session.commit()
-            # session["username"] = username
-            return redirect(url_for("login"))
+        if is_human(captcha_response):
 
-        return render_template("register.html", error=error)
-
-    return render_template("register.html")
+            if error is None:
+                new_user = User(username, generate_password_hash(password))
+                db.session.add(new_user)
+                db.session.commit()
+                return redirect(url_for("login"))
+        else:
+            error = "reCaptcha required."
+    return render_template("register.html", error=error, site_key=site_key)
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    error = None
+
     if "username" in session:
         return redirect(url_for("dashboard"))
     if request.method == "POST":
-        username = request.form.get("username")
+        username = request.form.get("username").lower()
         password = request.form.get("password")
-        error = None
+        captcha_response = request.form["g-recaptcha-response"]
         user = User.query.filter_by(username=username).first()
-
-        # hobby_array = user.hobbies.split(",")
-        # session["hobbies"] = hobby_array
-        # first_hobby = random.choice(hobby_array)
 
         if user is None:
             error = "Incorrect username."
+        elif password is None:
+            error = "Incorrect password."
         elif not check_password_hash(user.password, password):
             error = "Incorrect password."
 
-        if error is None:
-            session["username"] = username
-            # session["room"] = first_hobby
-            return redirect(url_for("chat"))
-
-        return render_template("login.html", error=error)
-
-    return render_template("login.html")
+        if is_human(captcha_response):
+            if error is None:
+                session["username"] = username
+                return redirect(url_for("dashboard"))
+        else:
+            error = "reCaptcha required."
+    return render_template("login.html", error=error, site_key=site_key)
 
 
 @app.route("/logout")

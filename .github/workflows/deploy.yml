@@ -52,12 +52,12 @@ jobs:
         run: bash ./prod-test.sh
 
       - name: Discord success notification
-         if: ${{ success() }}
-         run: |
-           curl -s -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "content=🚀 Deployment Success https://weepingmelon.duckdns.org/"
+        if: ${{ success() }}
+        run: |
+          curl -s -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "content=🚀 Deployment Success https://weepingmelon.duckdns.org/"
  
-       - name: Discord failure notification
-         if: ${{ failure() }}
-         run: |
-           curl -s -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "content= !!!!🚫 Deployment Failed 🚫!!!!"
+      - name: Discord failure notification
+        if: ${{ failure() }}
+        run: |
+          curl -s -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "content= !!!!🚫 Deployment Failed 🚫!!!!"
       

@@ -1,5 +1,5 @@
 #!/bin/bash
-sleep 10
+sleep 5
 EXITSTATUS=0
 
 # website data

@@ -46,6 +46,8 @@ AWS Instance
 - Postgres
 - NGINX
 - cAdvisor
+- Prometheus
+- Redis
 - Docker containers
 - reCaptcha
 - Github Actions

@@ -50,7 +50,6 @@
                             <div class="about">
                                 <h style="color:white; font-weight: 700;"> pronouns </h>
                                 <h1 style="color:white; font-weight: 700;">username</h1>
-                                <p style="color:white; font-weight: 700;"> interests and hobbies </p>
                             </div>
 
                         </div>
@@ -60,15 +59,30 @@
 
                             <div class="status" style="width: 90%">
                                 <form class="form-signin" action="{{url_for('chat')}}" method="POST">
-                                    <h1 class="title" style="font-size: 30px;">Your Current Matches</h1><br>
+                                    <h1 class="title" style="font-size: 30px;">Enter a fun blobber Room</h1><br>
                                     <div class="search">
-                                        <input type="text" id="room" name="room" class="search-bar"
-                                            placeholder="Enter this chatroom to talk to @username" required>
-                                        <button class="search-btn" value="submit"
-                                            style="background-image: linear-gradient(to right, #ff83d5, #ffccb0); color: #fff;
-                                    cursor: pointer; width: 10rem; height: 5.5rem; border-radius: 5rem; border: none; margin-left: -10rem;">Start
-                                            Chat</button>
-                                </form>
+                                        <form action="POST">
+                                            <label for="hobbies">
+                                                <p class="paragraph" style="margin-bottom:1rem; font-weight: bold; font-size: 2rem; color: #2b3153;"> Select a topic you wanna blob about: </p>
+                                            </label>
+                                            <select name="hobbies" id="hobbies" class="custom-select" required>
+                                                <option value="" disabled selected hidden>Select</option>
+                                                <option value="Arts">Arts & Crafts, Fine Arts</option>
+                                                <option value="Anime">Anime</option>
+                                                <option value="Astrology">Astrology/Zodiac</option>
+                                                <option value="Books">Books</option>
+                                                <option value="Fandoms">Fandoms</option>
+                                                <option value="Games">Games/Gaming</option>
+                                                <option value="Jokes">Knock-Knock Jokes</option>
+                                                <option value="Movies">Movies</option>
+                                                <option value="Music">Music</option>
+                                                <option value="Sports">Sports</option>
+                                                <option value="Tech">Tech</option>
+                                            </select>
+                                            <br>
+
+                                <input type="submit" class="search-btn" style="margin-left: 100px; margin-top:1rem; margin-bottom: 1rem; width: 25rem;" value="Start Chat">
+                        </form>
 
                             </div>
                         </div>

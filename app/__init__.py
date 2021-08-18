@@ -352,12 +352,12 @@ def chat():
         # session["username"] = username
         # session["room"] = room
         return render_template(
-            "chat.html", _external=True, _scheme="http", session=session
+            "chat.html", _external=True, _scheme="https", session=session
         )
     else:
         if session.get("username") is not None:
             return render_template(
-                "chat.html", _external=True, _scheme="http", session=session
+                "chat.html", _external=True, _scheme="https", session=session
             )
         else:
             return redirect(url_for("index"))

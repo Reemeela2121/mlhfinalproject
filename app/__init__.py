@@ -444,6 +444,11 @@ def questionnaire():
     return render_template("questions.html", title="questionnaire", url="quiz")
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return "<h1> Not Found</h1>", 404
+
+
 # @app.route("/loading")
 # def loading_screen():
 #     return render_template()

@@ -57,6 +57,7 @@ Prometheus
 - Github Actions
 - AWS instance
 - Hosted on .tech domain
+- IP blocking, domain name only
 
 
 ## Installation

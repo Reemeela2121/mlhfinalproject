@@ -25,11 +25,15 @@ replay attacks.
 Home Page
 ![image](https://user-images.githubusercontent.com/51943194/129788201-1c9a24f1-0858-41b9-90f2-3e756d9742a4.png)
 
-Register
-![image](https://user-images.githubusercontent.com/51943194/129788246-d4adb192-ceb4-42cd-b0c9-774f887b1ae8.png)
-
 Login
 ![image](https://user-images.githubusercontent.com/51943194/129788442-ed820c5a-6b32-4534-8303-1caa0fa3c3fc.png)
+
+Chatroom
+![image](https://user-images.githubusercontent.com/51943194/129834857-2c57f44f-6387-4654-ad6a-9eb95d958cfa.png)
+
+AWS Instance
+![image](https://user-images.githubusercontent.com/51943194/129834519-62245360-8a78-41d4-ab93-f157b526c64a.png)
+
 
 
 
@@ -45,6 +49,7 @@ Login
 - Docker containers
 - reCaptcha
 - Github Actions
+- AWS instance
 - Hosted on .tech domain
 
 

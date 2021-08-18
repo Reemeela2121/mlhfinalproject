@@ -351,10 +351,14 @@ def chat():
         # Store the data in session
         # session["username"] = username
         # session["room"] = room
-        return render_template("chat.html", _scheme="http", session=session)
+        return render_template(
+            "chat.html", _external=True, _scheme="http", session=session
+        )
     else:
         if session.get("username") is not None:
-            return render_template("chat.html", _scheme="http", session=session)
+            return render_template(
+                "chat.html", _external=True, _scheme="http", session=session
+            )
         else:
             return redirect(url_for("index"))
 

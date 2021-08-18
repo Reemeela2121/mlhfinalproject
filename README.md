@@ -17,8 +17,8 @@ similiar interests. A user would join our service, answer a few questions and be
 paired with someone who have similiar interests. We used socketio for the chatroom; 
 HTML/CSS for the design; Postgres for our backend database; Flask for our web
 framework; Nginx to reverse proxy; Created a blobber.tech domain. Contained our
-application and use cAdvisor for monitoring. Used google reCaptcha to help with
-replay attacks. 
+application and use cAdvisor and Prometheus for logging and monitoring. Lastly, 
+we use google reCaptcha to help with replay attempts. 
 
 ## Visuals 
 **updated 8/17/2021

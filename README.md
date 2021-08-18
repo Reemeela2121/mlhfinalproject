@@ -34,7 +34,11 @@ Chatroom
 AWS Instance
 ![image](https://user-images.githubusercontent.com/51943194/129834519-62245360-8a78-41d4-ab93-f157b526c64a.png)
 
+cAdvisor
+![image](https://user-images.githubusercontent.com/51943194/129844313-bb41c80f-efe4-40aa-9d65-96e25883c0e8.png)
 
+Prometheus
+![image](https://user-images.githubusercontent.com/51943194/129845143-29dfd02d-ab18-4919-a76d-98f7bb9f7bb8.png)
 
 
 ## Technologies Used

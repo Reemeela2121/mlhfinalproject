@@ -33,6 +33,7 @@ app.config[
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
+
 # initialize the database
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -96,229 +97,7 @@ def is_human(captcha_response):
     return response_text["success"]
 
 
-def age_score(own_age, other_age):
-    diff = abs(own_age - other_age)
-    if diff == 0:
-        diff = 1
-    return 5 / diff
-
-
-def gender_score(own_gender, other_gender):
-    if own_gender == other_gender:
-        return 3
-    else:
-        return 1
-
-
-def personality_score(own_personality, other_personality):
-    if own_personality == other_personality:
-        return 3
-    elif own_personality == "ambivert" or other_personality == "ambivert":
-        return 1.5
-    else:
-        return 0
-
-
-def horoscope_score(
-    own_horoscope, other_horoscope
-):  # i dont believe in horoscopes but this is kinda fun
-    if (own_horoscope == "cancer" or other_horoscope == "cancer") and (
-        own_horoscope == "saggitarius" or other_horoscope == "saggitarius"
-    ):
-        return 3
-    elif (own_horoscope == "taurus" or other_horoscope == "taurus") and (
-        own_horoscope == "pisces" or other_horoscope == "pisces"
-    ):
-        return 3
-    elif (own_horoscope == "gemini" or other_horoscope == "gemini") and (
-        own_horoscope == "capricorn" or other_horoscope == "capricorn"
-    ):
-        return 3
-    elif (own_horoscope == "libra" or other_horoscope == "libra") and (
-        own_horoscope == "leo" or other_horoscope == "leo"
-    ):
-        return 3
-    elif (own_horoscope == "scorpio" or other_horoscope == "scorpio") and (
-        own_horoscope == "aries" or other_horoscope == "aries"
-    ):
-        return 3
-    elif (own_horoscope == "virgo" or other_horoscope == "virgo") and (
-        own_horoscope == "aquarius" or other_horoscope == "aquarius"
-    ):
-        return 3
-    else:
-        return 0
-
-
-def hobby_score(own_hobbies, other_hobbies):
-    own_hobbies_arr = own_hobbies.split(", ")
-    other_hobbies_arr = other_hobbies.split(", ")
-    common = list(set(own_hobbies_arr).intersection(other_hobbies_arr))
-    return len(common)
-
-
-def term_score(own_term, other_term):
-    if own_term == other_term:
-        return 4
-    else:
-        return 0
-
-
-def profession_score(own_profession, other_profession):
-    if own_profession == other_profession:
-        return 3
-    else:
-        return 0
-
-
-def music_score(own_music, other_music):
-    own_music_arr = own_music.split(", ")
-    other_music_arr = other_music.split(", ")
-    common = list(set(own_music_arr).intersection(other_music_arr))
-    return len(common)
-
-
-def age_score(own_age, other_age):
-    diff = abs(own_age - other_age)
-    if diff == 0:
-        diff = 1
-    return 5 / diff
-
-
-def gender_score(own_gender, other_gender):
-    if own_gender == other_gender:
-        return 3
-    else:
-        return 1
-
-
-def personality_score(own_personality, other_personality):
-    if own_personality == other_personality:
-        return 3
-    elif own_personality == "ambivert" or other_personality == "ambivert":
-        return 1.5
-    else:
-        return 0
-
-
-def horoscope_score(
-    own_horoscope, other_horoscope
-):  # i dont believe in horoscopes but this is kinda fun
-    if (own_horoscope == "cancer" or other_horoscope == "cancer") and (
-        own_horoscope == "saggitarius" or other_horoscope == "saggitarius"
-    ):
-        return 3
-    elif (own_horoscope == "taurus" or other_horoscope == "taurus") and (
-        own_horoscope == "pisces" or other_horoscope == "pisces"
-    ):
-        return 3
-    elif (own_horoscope == "gemini" or other_horoscope == "gemini") and (
-        own_horoscope == "capricorn" or other_horoscope == "capricorn"
-    ):
-        return 3
-    elif (own_horoscope == "libra" or other_horoscope == "libra") and (
-        own_horoscope == "leo" or other_horoscope == "leo"
-    ):
-        return 3
-    elif (own_horoscope == "scorpio" or other_horoscope == "scorpio") and (
-        own_horoscope == "aries" or other_horoscope == "aries"
-    ):
-        return 3
-    elif (own_horoscope == "virgo" or other_horoscope == "virgo") and (
-        own_horoscope == "aquarius" or other_horoscope == "aquarius"
-    ):
-        return 3
-    else:
-        return 0
-
-
-def hobby_score(own_hobbies, other_hobbies):
-    own_hobbies_arr = own_hobbies.split(", ")
-    other_hobbies_arr = other_hobbies.split(", ")
-    common = list(set(own_hobbies_arr).intersection(other_hobbies_arr))
-    return len(common)
-
-
-def term_score(own_term, other_term):
-    if own_term == other_term:
-        return 4
-    else:
-        return 0
-
-
-def profession_score(own_profession, other_profession):
-    if own_profession == other_profession:
-        return 3
-    else:
-        return 0
-
-
-def music_score(own_music, other_music):
-    own_music_arr = own_music.split(", ")
-    other_music_arr = other_music.split(", ")
-    common = list(set(own_music_arr).intersection(other_music_arr))
-    return len(common)
-
-
-##### Routes
-
-
-@app.route("/testing", methods=["GET", "POST"])
-def testing():
-    if "username" in session:
-        current_user = session["username"]
-
-    else:
-        return "u r not logged in"
-
-    rows = User.query.count()  # get table length
-
-    own_age = User.query.filter_by(username=current_user).first().age
-    own_gender = User.query.filter_by(username=current_user).first().gender
-    own_personality = User.query.filter_by(username=current_user).first().sexuality
-    own_horoscope = User.query.filter_by(username=current_user).first().horoscope
-    own_hobbies = User.query.filter_by(username=current_user).first().hobbies
-    own_term = User.query.filter_by(username=current_user).first().term
-    own_profession = User.query.filter_by(username=current_user).first().profession
-    own_music = User.query.filter_by(username=current_user).first().music
-
-    highest_match_value = -1
-    highest_match_id = None
-    for i in range(2, rows + 2):
-        if User.query.filter_by(id=i).first().username == current_user:
-            continue
-
-        match_value = 0
-        match_value += age_score(own_age, User.query.filter_by(id=i).first().age)
-        match_value += gender_score(own_age, User.query.filter_by(id=i).first().gender)
-
-        match_value += sexuality_score(
-            own_age, User.query.filter_by(id=i).first().sexuality
-        )
-        match_value += horoscope_score(
-            own_age, User.query.filter_by(id=i).first().horoscope
-        )
-        match_value += hobbies_score(
-            own_age, User.query.filter_by(id=i).first().hobbies
-        )
-        match_value += term_score(own_age, User.query.filter_by(id=i).first().term)
-        match_value += profession_score(
-            own_age, User.query.filter_by(id=i).first().profession
-        )
-
-        match_value += music_score(own_age, User.query.filter_by(id=i).first().music)
-
-        if match_value > highest_match_value and match_value > 0:
-            highest_match_value = match_value
-            highest_match_id = i
-
-    if highest_match_id == None:
-        return "you r forever alone"
-    return (
-        "Your best match is with user: "
-        + User.query.filter_by(id=highest_match_id).first().username
-    )
-
+# Routes
 
 # Home page
 @app.route("/")
@@ -346,6 +125,7 @@ def chat():
         return redirect(url_for("index"))
 
 
+# user register
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if "username" in session:
@@ -382,6 +162,7 @@ def register():
     return render_template("register.html", error=error, site_key=site_key)
 
 
+# user login
 @app.route("/login", methods=["GET", "POST"])
 def login():
     error = None
@@ -412,6 +193,7 @@ def login():
     return render_template("login.html", error=error, site_key=site_key)
 
 
+# user logout
 @app.route("/logout")
 def logout():
     session.clear()
@@ -428,17 +210,14 @@ def about():
     return render_template("about.html", title="about", url="about")
 
 
-@app.route("/quiz")
-def questionnaire():
-    return render_template("questions.html", title="questionnaire", url="quiz")
-
-
 @app.errorhandler(404)
 def page_not_found(e):
     return "<h1> Not Found</h1>", 404
 
 
 # SocketIO events
+
+
 @socketio.on("join", namespace="/chat")
 def join(message):
     """Sent by clients when they enter a room.
@@ -466,8 +245,8 @@ def left(message):
     A status message is broadcast to all people in the room."""
     room = session.get("room")
     username = session.get("username")
-    Room.query.filter_by(room_name=room).first().occupancy -= 1
-    db.session.commit()
+    # Room.query.filter_by(room_name=room).first().occupancy -= 1
+    # db.session.commit()
 
     leave_room(room)
     session.clear()

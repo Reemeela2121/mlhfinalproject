@@ -391,7 +391,7 @@ def login():
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
-        # captcha_response = request.form["g-recaptcha-response"]
+        captcha_response = request.form["g-recaptcha-response"]
         user = User.query.filter_by(username=username).first()
 
         if user is None:

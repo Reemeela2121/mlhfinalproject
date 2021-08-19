@@ -1,6 +1,64 @@
-# mlhfinalproject
 
-final project for mlh; in collaboration with other members of my pod
+# Blobber Buddy Chat
+
+by Gigi, Joying, Megan and Reem :)
+Pod 335
+
+## Introduction
+
+We live in a pandemic world where social distancing and germaphobia is the new social norm. 
+Finding friends is becoming more difficult and strangers are becoming stranger! Fear not! Blobber's got your
+back. Blobber will find friends for you so you'll have a friend to talk to anywhere, anytime.
+
+## Description
+
+Our group worked on a webapp that would allow people to meetup and chat based on 
+similiar interests. A user would join our service, answer a few questions and be
+paired with someone who have similiar interests. We used socketio for the chatroom; 
+HTML/CSS for the design; Postgres for our backend database; Flask for our web
+framework; Nginx to reverse proxy; Created a blobber.tech domain. Contained our
+application and use cAdvisor and Prometheus for logging and monitoring. Lastly, 
+we use google reCaptcha to help with replay attempts. 
+
+## Visuals 
+**updated 8/17/2021
+Home Page
+![image](https://user-images.githubusercontent.com/51943194/129788201-1c9a24f1-0858-41b9-90f2-3e756d9742a4.png)
+
+Login
+![image](https://user-images.githubusercontent.com/51943194/129788442-ed820c5a-6b32-4534-8303-1caa0fa3c3fc.png)
+
+Chatroom
+![image](https://user-images.githubusercontent.com/51943194/129834857-2c57f44f-6387-4654-ad6a-9eb95d958cfa.png)
+
+AWS Instance
+![image](https://user-images.githubusercontent.com/51943194/129834519-62245360-8a78-41d4-ab93-f157b526c64a.png)
+
+cAdvisor
+![image](https://user-images.githubusercontent.com/51943194/129844313-bb41c80f-efe4-40aa-9d65-96e25883c0e8.png)
+
+Prometheus
+![image](https://user-images.githubusercontent.com/51943194/129845143-29dfd02d-ab18-4919-a76d-98f7bb9f7bb8.png)
+
+
+## Technologies Used
+
+- Python-Flask
+- HTML / CSS
+- SocketIO
+- HTML/CSS
+- Postgres
+- NGINX
+- cAdvisor
+- Prometheus
+- Redis
+- Docker containers
+- reCaptcha
+- Github Actions
+- AWS instance
+- Hosted on .tech domain
+- IP blocking, domain name only
+
 
 ## Installation
 
@@ -22,18 +80,8 @@ pip install -r requirements.txt
 
 ```
 
-- Pay particiular attention to the dependencies needed for SocketIO
-  - Flask-SocketIO==4.3.1
-  - python-socketio==4.4.0
-  - python-engineio==3.13.2
-- **NOTE** Due to a known [issue](https://github.com/miguelgrinberg/Flask-SocketIO/issues/801) in SocketIO, the app can only be run in **production** mode
+- **NOTE** Due to a known [issue](https://github.com/miguelgrinberg/Flask-SocketIO/issues/801) in SocketIO, the app may only be run in **production** mode
 
-- Setup ENV file: - Under app directory create a .env file - Include the following information for configuring your database and fill in with your information:
-
-  POSTGRES_USER=
-  POSTGRES_PASSWORD=
-  POSTGRES_HOST=
-  POSTGRES_DB=
 
 ## Usage
 
@@ -44,4 +92,14 @@ $ flask run
 
 ```
 
+- Setup ENV file: 
+  - create a .env file 
+  - Include the following information to configure your database and fill in with your information:
+
+    - POSTGRES_USER=
+    - POSTGRES_PASSWORD=
+    - POSTGRES_HOST=
+    - POSTGRES_DB=
+  
 Start a web browser and type in localhost:5000, page will render and can be intereact like any other webpage.
+

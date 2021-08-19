@@ -39,33 +39,45 @@
         <div class="container">
             <div class="content">
                 <div class="content-details">
-
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    <ul class=flashes>
+                        {% for message in messages %}
+                        {{ message }}
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% endwith %}
                     <div class="search">
                         <h1 class="login-title"
                             style="margin-bottom: 1.5rem; color: white; font-size: 3rem; margin-left: 1rem;"> Login
                         </h1>
-
+                        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
                         {% if error %}
                         <p class=error><strong>Error:</strong> {{ error }}
-                        {% endif %}
+                            {% endif %}
 
                         <form method="POST">
-                        <input type="text" name="username" class="search-bar" style="margin-bottom: 2.5rem;" placeholder="username"
-                            required>
-                        <br>
-                        <input type="text" name="password" class="search-bar" placeholder="password" style="margin-bottom: 2.5rem;"
-                            required> <!-- can use this for tampal !!! forms -->
-                        <!-- <a href="{{ url_for('dashboard') }}">
-                            <input type="button" class="search-btn-login" style="background-image: linear-gradient(to right, #ff83d5, #ffccb0); color: #fff;
-                            cursor: pointer; width: 10rem;" value="Login"> </a> -->
+                            <input type="text" name="username" class="search-bar" style="margin-bottom: 2.5rem;"
+                                placeholder="username" placeholder="username" required>
+                            <br>
+                            <input type="password" name="password" class="search-bar" placeholder="password"
+                                style="margin-bottom: 2.5rem;" required>
+                            <p>
+                            <div class="g-recaptcha" data-sitekey="{{ site_key }}"
+                                style="text-align: center; display: inline-block;"></div>
+                            </p>
+                            <br>
                             <button type="submit" class="search-btn-login" style="background-image: linear-gradient(to right, #ff83d5, #ffccb0); color: #fff;
-                            cursor: pointer; width: 10rem; height: 5rem; border-radius: 30px; padding: 0; border: none;">Submit</button>    
+                            cursor: pointer; width: 10rem; height: 3rem; border-radius: 8px">Submit</button>
+
                         </form>
 
 
                     </div>
                     <a href="{{ url_for('register') }}" style="color:white; text-align: center;">
-                        New to Blobber? Sign up here </a>
+                        New to Blobber? <input type="button" value="Sign up here" style="background-image: linear-gradient(to right, #ff83d5, #ffccb0); color: #fff;
+                        cursor: pointer; width: 10rem; border-radius: 4px"> </a>
 
                 </div>
 

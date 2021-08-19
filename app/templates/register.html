@@ -9,9 +9,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../static/styles/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
 </head>
 
+
 <body>
+
     <header>
         <div class="container">
             <nav class="nav">
@@ -44,33 +47,34 @@
                         <h1 class="login-title"
                             style="margin-bottom: 1.5rem; color: white; font-size: 3rem; margin-left: 1rem;"> Register
                         </h1>
-
+                        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
                         {% if error %}
-                            <p class=error><strong>Error:</strong> {{ error }}
-                        {% endif %}
-
+                        <p class=error><strong>Error:</strong> {{ error }}
+                            {% endif %}
 
 
                         <form method="post">
-                        <input type="text" name="username" class="search-bar" style="margin-bottom: 2.5rem;" placeholder="username"
-                            required>
-                        <br>
-                        <input type="password" name="password" class="search-bar" placeholder="password" style="margin-bottom: 2.5rem;"
-                            required> <!-- can use this for tampal !!! forms -->
-                        <br>
-                        <!--
-                        <input type="text" name="hobbies" class="search-bar" placeholder="hobbies" style="margin-bottom: 2.5rem;"
-                            required> -->
-                        <button type="submit" class="search-btn-login" style="background-image: linear-gradient(to right, #ff83d5, #ffccb0); color: #fff;
-                        cursor: pointer; width: 10rem; height: 5rem; border-radius: 30px; padding: 0; border: none;">Submit</button>  
+                            <input type="text" name="username" class="search-bar" style="margin-bottom: 2.5rem;"
+                                placeholder="username" required>
+                            <br>
+                            <input type="text" name="pronouns" class="search-bar" style="margin-bottom: 2.5rem;"
+                                placeholder="pronouns" required>
+                            <br>
+                            <input type="password" name="password" class="search-bar" placeholder="password"
+                                style="margin-bottom: 2.5rem;" required>
+                            <br>
+                            <input type="password" name="password2" class="search-bar" placeholder="re-type password"
+                                style="margin-bottom: 2.5rem;" required>
 
-                        <!-- <a href="{{ url_for('dashboard') }}">
-                            <input type="button" class="search-btn-login" style="background-image: linear-gradient(to right, #ff83d5, #ffccb0); color: #fff;
-                            cursor: pointer; width: 10rem;" value="Sign Up"> </a> -->
+                            <p>
+                            <div class="g-recaptcha" data-sitekey="{{ site_key }}"
+                                style="text-align: center; display: inline-block;"></div>
+                            </p>
+                            <br>
+                            <button type="submit" class="search-btn-login" style="background-image: linear-gradient(to right, #ff83d5, #ffccb0); color: #fff;
+                        cursor: pointer; width: 10rem; height: 3rem; border-radius: 8px">Submit</button>
 
                         </form>
-
-
 
                     </div>
 
@@ -89,5 +93,5 @@
         <img src="../static/img/liq-6.png" alt="" class="blob blob-4">
     </section>
 </body>
-  
+
 </html>

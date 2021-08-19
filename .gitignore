@@ -6,3 +6,6 @@ __pycache__
 .vscode
 /virtualenv
 /migrations
+/app/migrations
+/app/requirements.txt
+docker-compose-home.yml

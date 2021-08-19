@@ -15,7 +15,6 @@
         integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ=="
         crossorigin="anonymous"></script>
 
-    
     <script type="text/javascript" charset="utf-8">
 
         // Connect to the SocketIO server
@@ -24,6 +23,7 @@
         var socket;
         $(document).ready(function () {
             socket = io.connect('https://' + document.domain + ':' + location.port + '/chat');
+            // socket = io.connect('https://' + document.domain + ':' + location.port + '/chat');
             socket.on('connect', function () {
                 socket.emit('join', {});
             });
@@ -62,6 +62,15 @@
                 // go back to logout
                 window.location.href = "{{ url_for('index') }}";
             });
+        }
+
+        function go_back() {
+            socket.emit('left', {}, function () {
+                socket.disconnect();
+                // go back to logout
+                window.location.href = "{{ url_for('dashboard') }}";
+            });
+
 
         }
     </script>
@@ -112,7 +121,8 @@
                         cursor: pointer; width: 10rem; height: 5.5rem; border-radius: 5rem; border: none; margin-left: -10rem;"
                                         class="">SEND</button><br><br>
                                 </div>
-                                <a href="{{ url_for('dashboard') }}">Go Back</a>
+                                <a href="/dashboard" class="nav-link" onclick=go_back()>Go Back</a>
+                                <!-- <a href="{{ url_for('dashboard') }}">Go Back</a> -->
                             </div>
                         </div>
                     </div>

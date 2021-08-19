@@ -3,7 +3,6 @@ from flask_socketio import SocketIO, join_room, leave_room, emit
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-
 import os
 import requests
 from dotenv import load_dotenv, find_dotenv
@@ -58,22 +57,10 @@ class User(db.Model):
     profession = db.Column(db.String(), nullable=True)
     music = db.Column(db.String(), nullable=True)
 
-    def __init__(self, username, password):
-        # def __init__(self, username, password, pronouns, age, gender, sexuality, personality, horoscope, hobbies, term, profession, music):
+    def __init__(self, username, password, pronouns):
         self.username = username
         self.password = password
-
-    # self.pronouns = pronouns
-
-    #        self.age = age
-    #        self.gender = gender
-    #        self.sexuality = sexuality
-    #        self.personality = personality  # introvert / extrovert / ambivert
-    #        self.horoscope = horoscope
-    #        self.hobbies = hobbies
-    #        self.term = term  # long term friend or short term friend
-    #        self.profession = profession
-    #        self.music = music  # music taste
+        self.pronouns = pronouns
 
     def __repr__(self):
         return f"<User {self.username}>"
@@ -273,6 +260,9 @@ def music_score(own_music, other_music):
     return len(common)
 
 
+##### Routes
+
+
 @app.route("/testing", methods=["GET", "POST"])
 def testing():
     if "username" in session:
@@ -339,24 +329,21 @@ def index():
 # dashboard
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
-    return render_template("dashboard.html")
+    username = session.get("username")
+    pronouns = session.get("pronouns")
+    if request.method == "POST":
+        session["room"] = request.form.get("hobbies")
+        return redirect(url_for("chat"))
+    return render_template("dashboard.html", username=username, pronouns=pronouns)
 
 
 # chat-room
 @app.route("/chat", methods=["GET", "POST"])
 def chat():
-    if request.method == "POST":
-        # username = request.form["username"]
-        # room = request.form["room"]
-        # Store the data in session
-        # session["username"] = username
-        # session["room"] = room
+    if session.get("username") is not None:
         return render_template("chat.html", session=session)
     else:
-        if session.get("username") is not None:
-            return render_template("chat.html", session=session)
-        else:
-            return redirect(url_for("index"))
+        return redirect(url_for("index"))
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -366,6 +353,7 @@ def register():
     error = None
     if request.method == "POST":
         username = request.form.get("username")
+        pronouns = request.form.get("pronouns")
         password = request.form.get("password")
         password2 = request.form.get("password2")
 
@@ -383,7 +371,7 @@ def register():
         if is_human(captcha_response):
 
             if error is None:
-                new_user = User(username, generate_password_hash(password))
+                new_user = User(username, generate_password_hash(password), pronouns)
                 db.session.add(new_user)
                 db.session.commit()
                 flash("Congratulations, you are now a registered user of blobber chat!")
@@ -403,7 +391,7 @@ def login():
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
-        captcha_response = request.form["g-recaptcha-response"]
+        # captcha_response = request.form["g-recaptcha-response"]
         user = User.query.filter_by(username=username).first()
 
         if user is None:
@@ -416,6 +404,7 @@ def login():
         if is_human(captcha_response):
             if error is None:
                 session["username"] = username
+                session["pronouns"] = user.pronouns
                 return redirect(url_for("dashboard"))
 
         else:
@@ -449,21 +438,6 @@ def page_not_found(e):
     return "<h1> Not Found</h1>", 404
 
 
-# @app.route("/loading")
-# def loading_screen():
-#     return render_template()
-
-
-# @app.route("/create_profile")
-# def create_profile():
-#     return render_template()
-
-
-# @app.route("/profile")
-# def profile():
-#     return render_template()
-
-
 # SocketIO events
 @socketio.on("join", namespace="/chat")
 def join(message):
@@ -471,47 +445,9 @@ def join(message):
     A status message is broadcast to all people in the room."""
 
     room = session.get("room")
-
-    # -= old code =-
-    # username = session.get("username")
-    # join_room(room)
-    # emit("status", {"msg": f"{username} has entered the room."}, room=room)
-
+    username = session.get("username")
     join_room(room)
-
-    exists = Room.query.filter_by(room_name=room).first() is not None
-
-    # if error is None:
-    #     new_user = User(username, generate_password_hash(password), hobbies)
-    #     db.session.add(new_user)
-    #     db.session.commit()
-    #     return redirect(url_for("login"))
-
-    capacity = 2
-
-    if exists:
-        if Room.query.filter_by(room_name=room).first().occupancy > capacity:
-            print("room has reached capacity")
-            return
-        Room.query.filter_by(room_name=room).first().occupancy += 1
-        db.session.commit()
-
-    else:
-        new_room = Room(room, 1)
-        db.session.add(new_room)
-        db.session.commit()
-    current_occupancy = str(Room.query.filter_by(room_name=room).first().occupancy)
-
-    emit(
-        "status",
-        {
-            "msg": session.get("username")
-            + " has entered the room. The current occupancy is "
-            + current_occupancy
-            + "."
-        },
-        room=room,
-    )
+    emit("status", {"msg": f"{username} has entered the room."}, room=room)
 
 
 @socketio.on("text", namespace="/chat")

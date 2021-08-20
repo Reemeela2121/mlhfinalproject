@@ -50,6 +50,12 @@ cAdvisor
 Prometheus
 ![image](https://user-images.githubusercontent.com/51943194/129845143-29dfd02d-ab18-4919-a76d-98f7bb9f7bb8.png)
 
+Grafana Dashboard
+![image](https://user-images.githubusercontent.com/51943194/130197840-aef1d1a3-7a4d-4646-ad5e-f7e9ea91694f.png)
+
+Grafana Dashboard 2
+![image](https://user-images.githubusercontent.com/51943194/130197947-33246c0d-9728-4969-b621-95129d360caa.png)
+
 
 ## Technologies Used
 

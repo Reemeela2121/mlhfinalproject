@@ -108,11 +108,14 @@ def index():
 # dashboard
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
+    if session.get("username") is None:
+        return redirect(url_for("login"))
     username = session.get("username")
     pronouns = session.get("pronouns")
     if request.method == "POST":
         session["room"] = request.form.get("hobbies")
         return redirect(url_for("chat"))
+
     return render_template("dashboard.html", username=username, pronouns=pronouns)
 
 
@@ -122,7 +125,7 @@ def chat():
     if session.get("username") is not None:
         return render_template("chat.html", session=session)
     else:
-        return redirect(url_for("index"))
+        return redirect(url_for("login"))
 
 
 # user register
@@ -216,8 +219,6 @@ def page_not_found(e):
 
 
 # SocketIO events
-
-
 @socketio.on("join", namespace="/chat")
 def join(message):
     """Sent by clients when they enter a room.
@@ -247,7 +248,6 @@ def left(message):
     username = session.get("username")
     # Room.query.filter_by(room_name=room).first().occupancy -= 1
     # db.session.commit()
-
     leave_room(room)
     session.clear()
     emit("status", {"msg": f"{username} has left the room."}, room=room)

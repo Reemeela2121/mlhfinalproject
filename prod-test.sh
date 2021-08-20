@@ -4,7 +4,7 @@ EXITSTATUS=0
 
 # website data
 URL="https://blobber.tech"
-PAGES="/ /dashboard /login /register /faq /about"
+PAGES="/ /dashboard /login /register /faq /about /chat"
 METHODS="GET POST"
 
 # Testing endpoints with request methods

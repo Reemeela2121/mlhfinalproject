@@ -16,13 +16,13 @@ Our group worked on a webapp that would allow people to meetup and chat. A user
 would register to our service, and then sign-in, and join an exciting room. 
 
  - We used socketio for the chatroom
- - HTML/CSS for front-end design
+ - HTML / CSS for front-end design
  - Postgres for our backend database
  - Flask for our web framework
  - Nginx to reverse proxy to connect Flask
  - Created a blobber.tech domain
- - Contained our webapp, nginx and database for better security and efficiency 
- - Use cAdvisor, Prometheus and grafana for logging and monitoring containers in real time
+ - Contained our webapp, nginx and database for security and efficiency 
+ - Use cAdvisor, Prometheus and grafana for monitoring containers in real time
  - Created a custom CI/CD pipeline with Github Actions for testing, linting
  - Deployed on AWS with domain name and ip blocking
  - Use google reCaptcha to help with replay attempts
@@ -62,7 +62,6 @@ Grafana Dashboard 2
 - Python-Flask
 - HTML / CSS
 - SocketIO
-- HTML/CSS
 - Postgres
 - NGINX
 - cAdvisor
@@ -70,8 +69,6 @@ Grafana Dashboard 2
 - Docker containers
 - reCaptcha
 - Github Actions (CI/CD)
-- Linting
-- Test script
 - AWS instance
 - Hosted on .tech domain
 - IP blocking, domain name only

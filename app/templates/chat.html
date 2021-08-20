@@ -22,7 +22,7 @@
         //      http[s]://<domain>:<port>[/<namespace>]
         var socket;
         $(document).ready(function () {
-            socket = io.connect('https://' + document.domain + ':' + location.port + '/chat');
+            socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
             socket.on('connect', function () {
                 socket.emit('join', {});
             });
@@ -120,8 +120,10 @@
                         cursor: pointer; width: 10rem; height: 5.5rem; border-radius: 5rem; border: none; margin-left: -10rem;"
                                         class="">SEND</button><br><br>
                                 </div>
-                                <a href="/dashboard" class="nav-link" onclick=go_back()>Go Back</a>
-                                <!-- <a href="{{ url_for('dashboard') }}">Go Back</a> -->
+                                <button type="button" class="nav-link" style="background-image: linear-gradient(to right, #ff83d5, #ffccb0); color: #fff;
+                                cursor: pointer; width: 10rem; height: 3rem; border-radius: 5rem; border: none;"
+                                    onclick=go_back()>Go Back</button>
+                                <!-- <a href=" {{ url_for('dashboard') }}">Go Back</a> -->
                             </div>
                         </div>
                     </div>

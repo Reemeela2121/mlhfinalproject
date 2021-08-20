@@ -8,16 +8,21 @@ Pod 335
 
 We live in a pandemic world where social distancing and germaphobia is the new social norm. 
 Finding friends is becoming more difficult and strangers are becoming stranger! Fear not! Blobber's got your
-back. Blobber will find friends for you so you'll have a friend to talk to anywhere, anytime.
+back. Blobber will find friends for you so you'll have a friend to talk to anywhere, anytime online.
 
 ## Description
 
-Our group worked on a webapp that would allow people to meetup and chat based on 
-similiar interests. A user would join our service, answer a few questions and be
-paired with someone who have similiar interests. We used socketio for the chatroom; 
-HTML/CSS for the design; Postgres for our backend database; Flask for our web
-framework; Nginx to reverse proxy; Created a blobber.tech domain. Contained our
-application and use cAdvisor and Prometheus for logging and monitoring. Lastly, 
+Our group worked on a webapp that would allow people to meetup and chat. A user 
+would register to our service, and then sign-in, and join an exciting room. 
+
+We used socketio for the chatroom; 
+HTML/CSS for front-end design; 
+Postgres for our backend database; 
+Flask for our web framework; 
+Nginx to reverse proxy to a domain;
+Created a blobber.tech domain;
+Contained our application;
+Use cAdvisor and Prometheus for logging and monitoring. Lastly, 
 we use google reCaptcha to help with replay attempts. 
 
 ## Visuals 

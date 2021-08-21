@@ -59,6 +59,10 @@ Grafana Dashboard 2
 Containers
 ![image](https://user-images.githubusercontent.com/51943194/130271390-65ecb374-384c-4409-a9f0-9f442e83eb32.png)
 
+Discord Webhook
+![image](https://user-images.githubusercontent.com/51943194/130304013-a84b42fc-8934-47c3-964a-2795fe9bcf0c.png)
+
+
 
 
 ## Technologies Used

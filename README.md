@@ -16,8 +16,8 @@ Our group worked on a webapp that would allow people to meetup and chat. A user
 would register to our service, and then sign-in, and join an exciting room. 
 
  - Used socketio for the chatroom instant messenging
- - Used session-cookies to ensure only login-user can access the chatroom
- - HTML / CSS and a splash of javascript for front-end design
+ - Used session-cookies to ensure only login-user have access 
+ - HTML / CSS with a splash of javascript for front-end design
  - Postgres for our backend database connected via SqlAlchemy ORM to store user registeration data
  - Flask for our web framework
  - Gunicorn to load wsgi webserver
@@ -29,6 +29,8 @@ would register to our service, and then sign-in, and join an exciting room.
  - Created a custom CI/CD pipeline with Github Actions and workflow for testing, linting, webhook notification and deployment
  - Deployed on AWS with domain name, ip blocking and firewalld
  - Use google reCaptcha to help with replay attempts
+ - Tried Apache docker image inplace of Nginx when troubleshooting SocketIO
+ - Troubleshooting with Systemctl, Journalctl, Docker-compose logs, free and df
 
 ## Visuals 
 **updated 8/17/2021

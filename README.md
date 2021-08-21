@@ -41,7 +41,7 @@ Dashboard
 Chatroom
 ![image](https://user-images.githubusercontent.com/51943194/130191949-d2607105-4fb7-4ec1-a870-1e22b7c974bd.png)
 
-AWS Instance
+AWS Instance from t2.micro -> t2.small
 ![image](https://user-images.githubusercontent.com/51943194/129834519-62245360-8a78-41d4-ab93-f157b526c64a.png)
 
 cAdvisor

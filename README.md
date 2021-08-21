@@ -15,16 +15,19 @@ back. Blobber will find friends for you so you'll have a friend to talk to anywh
 Our group worked on a webapp that would allow people to meetup and chat. A user 
 would register to our service, and then sign-in, and join an exciting room. 
 
- - We used socketio for the chatroom
- - HTML / CSS for front-end design
- - Postgres for our backend database
+ - Used socketio for the chatroom instant messenging
+ - Used session-cookies to ensure only login-user can access the chatroom
+ - HTML / CSS and a splash of javascript for front-end design
+ - Postgres for our backend database connected via SqlAlchemy ORM to store user registeration data
  - Flask for our web framework
- - Nginx to reverse proxy to connect Flask
+ - Gunicorn to load wsgi webserver
+ - Configure Nginx to reverse proxy
  - Created a blobber.tech domain
- - Contained our webapp, nginx and database for security and efficiency 
- - Use cAdvisor, Prometheus and grafana for monitoring containers in real time
- - Created a custom CI/CD pipeline with Github Actions for testing, linting
- - Deployed on AWS with domain name and ip blocking
+ - Contained our webapp, nginx and database for security and efficiency in docker
+ - Used docker-compose yaml file to configurae docker containers to interact with each other
+ - Use cAdvisor, Prometheus and grafana for monitoring container resource usage in real time
+ - Created a custom CI/CD pipeline with Github Actions and workflow for testing, linting, webhook notification and deployment
+ - Deployed on AWS with domain name, ip blocking and firewalld
  - Use google reCaptcha to help with replay attempts
 
 ## Visuals 
